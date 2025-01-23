@@ -15,18 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }());
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-    
-            emailjs.sendForm('service_k11l0mq', 'template_bpnaktq', this)
-                .then(function() {
-                    alert('Message sent successfully!');
-                }, function(error) {
-                    alert('Failed to send message. Please try again later.');
-                });
-        });
-    });
 
     // Detect when the about, skills, projects, certifications, and contact sections are in the viewport
     const aboutSection = document.querySelector('.about');
