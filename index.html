@@ -57,7 +57,7 @@
             I'm proficient in Microsoft Office Suite too.
             I am committed to continuously improving my skills and contributing meaningfully to the field of technology. 
             </p>
-        <a href="https://bit.ly/40DfDTB" class="btn" target="_blank" download> My Resume</a>
+        <a href="https://1drv.ms/b/c/10596f52490421eb/EUYyacLgOIFIgr86Zo5MqRMBPTjXKSNlq89yiSswquOGkg?e=xlbwxP" class="btn" target="_blank" download> My Resume</a>
     </div>
 </section>
 
@@ -171,7 +171,7 @@
 <section id="contact">
     <div class="contact">
         <h1>Contact</h1>
-        <form id="contactForm" action="mailto:josephtettehmensah37@gmail.com" method="post" enctype="text/plain">
+        <form id="contactForm">
             <input type="text" name="name" placeholder="Name" required><br>
             <input type="email" name="email" placeholder="Email" required><br>
             <textarea name="message" placeholder="Message" required></textarea><br>
@@ -194,5 +194,23 @@
     <a href="http://wa.me/+233256269405" target="_blank" class="fa fa-whatsapp"></a>
 </footer>
 <script src="script.js"></script>
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    emailjs.init("TAF4Lj4Py6yX83IC8");
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        emailjs.sendForm('service_1s8rqlv', 'template_bpnaktq', this)
+            .then(function() {
+                alert('Message sent successfully!');
+                document.getElementById('contactForm').reset();
+            }, function(error) {
+                alert('Failed to send message. Please try again later.');
+            });
+    });
+});
+</script>
 </body>
 </html>

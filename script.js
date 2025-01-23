@@ -10,23 +10,22 @@ document.addEventListener("DOMContentLoaded", function() {
         if (character < length) {
             element.textContent += text.charAt(character);
             character++;
-            setTimeout(typeWriter, 100); // Adjust the speed as needed
+            setTimeout(typeWriter, 100); 
         }
     }());
 
-    // Handle form submission
-    const form = document.getElementById("contactForm");
 
-    form.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const name = form.elements["name"].value;
-        const email = form.elements["email"].value;
-        const message = form.elements["message"].value;
-
-        const mailtoLink = `mailto:josephtettehmensah37@gmail.com?subject=Contact Form Submission&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
-
-        window.location.href = mailtoLink;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            emailjs.sendForm('service_k11l0mq', 'template_bpnaktq', this)
+                .then(function() {
+                    alert('Message sent successfully!');
+                }, function(error) {
+                    alert('Failed to send message. Please try again later.');
+                });
+        });
     });
 
     // Detect when the about, skills, projects, certifications, and contact sections are in the viewport
