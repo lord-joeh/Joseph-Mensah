@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin-head</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./styles/head.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="navbar">
+        <ul
+          class="nav nav-pills nav-fill gap-2 p-1 small rounded-5 shadow-sm"
+          id="pillNav2"
+          role="tablist"
+          style="
+            --bs-nav-link-color: #121212;
+            --bs-nav-pills-link-active-color: #e0e0e0;
+            --bs-nav-pills-link-active-bg: #121212;
+          "
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="location.replace('admin.html')"
+              class="nav-link rounded-5"
+              id="back-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              <img src="../images/arrow_back.svg" alt="arrow back" width="30" />
+              Back
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="location.reload()"
+              class="nav-link active rounded-5"
+              id="head-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <img src="../images/refresh.svg" alt="arrow back" />  Head
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="location.replace('admin.html')"
+              class="nav-link rounded-5"
+              id="contact-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <img src="../images/home.svg" alt="home" width="30" /> Home
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="contain">
+      <div class="container">
+        <div class="alert"></div>
+
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="loading-spinner">
+          <div class="spinner-content">
+            <div class="spinner-border text-light" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-light">Processing...</p>
+          </div>
+        </div>
+
+        <!--Add image Modal-->
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close" data-modal="myModal">&times;</span>
+            <h3 id="modal-heading">Add Image</h3>
+            <div class="input-group">
+              <span class="input-group-text" id="add-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paste image url here"
+                aria-label="image"
+                aria-describedby="add-visible-addon"
+                id="add-image-url"
+              />
+            </div>
+            <hr />
+            <button type="submit" id="add-btn" class="btn btn-outline-light">
+              Add Image <img src="../images/send.svg" alt="send icon" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div id="deleteModal" class="modal">
+          <div class="modal-content">
+            <span class="close" data-modal="deleteModal">&times;</span>
+            <h3 id="delete-modal-heading">Delete Image</h3>
+            <p>Are you sure you want to delete this image?</p>
+            <hr />
+            <div class="modal-buttons">
+              <button
+                type="button"
+                class="btn btn-light"
+                id="cancel-delete-btn"
+              >
+                <img src="../images/close-icon.svg" alt="cancel icon" /> Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-outline-danger"
+                id="confirm-delete-btn"
+              >
+                <img src="../images/delete.svg" alt="delete icon" /> Confirm
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+          <div class="modal-content">
+            <span class="close" data-modal="editModal">&times;</span>
+            <h3 id="edit-modal-heading">Update Image</h3>
+            <p>Update your profile image URL</p>
+            <div class="input-group">
+              <span class="input-group-text" id="edit-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paste updated image url here"
+                aria-label="image"
+                aria-describedby="edit-visible-addon"
+                id="edit-image-url"
+              />
+            </div>
+            <hr />
+            <div class="modal-buttons">
+              <button type="button" class="btn btn-light" id="cancel-edit-btn">
+                <img src="../images/close-icon.svg" alt="cancel icon" /> Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-outline-success"
+                id="confirm-update-btn"
+              >
+                <img src="../images/edit-icon-white.svg" alt="update icon" />
+                Update Image
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--Add image button-->
+        <button
+          type="button"
+          class="btn btn-outline-light"
+          id="add-head-image-btn"
+        >
+          Add Head Image <img src="../images/add_circle.svg" alt="add circle" />
+        </button>
+
+        
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./scripts/head.js"></script>
+  </body>
+</html>

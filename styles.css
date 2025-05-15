@@ -112,7 +112,7 @@ body {
   animation: slideInLeft 1s ease-out; 
 }
 
-.hero .image {
+.hero .head-image {
   max-width: 300px;
   margin: 20px;
   border-radius: 12px;
@@ -385,6 +385,26 @@ img {
   font-family: 'Red Hat Display', sans-serif;
   font-weight: 400;
   color: #666;
+}
+
+#view-project-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#view-project-btn:hover {
+  background-color: #555
 }
 
 /* Certifications section styles */
