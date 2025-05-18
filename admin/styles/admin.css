@@ -2,11 +2,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: #121212;
 }
 
 header {
     padding: 20px;
-    font-size: 2rem
+    font-size: 2rem;
+    color: #e0e0e0;
 
 }
 
