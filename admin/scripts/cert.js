@@ -1,29 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const projectContainer = document.querySelector('.project-container');
   const alertMessage = document.querySelector('.alert');
-  const addNewProjectBtn = document.querySelector('#add-new-project-btn');
+  const addNewCertBtn = document.querySelector('#add-new-cert-btn');
   const loadingSpinner = document.querySelector('#loading-spinner');
   const closeBtns = document.querySelectorAll('.close');
-  const projectTitle = document.getElementById('project-title');
-  const projectImage = document.getElementById('project-image-url');
-  const projectDescription = document.getElementById('project-description');
-  const projectLink = document.getElementById('project-url');
-  const addProjectBtn = document.getElementById('add-project-btn');
-  const updatedProjectTitle = document.querySelector('#updated-project-title');
-  const updatedProjectImage = document.querySelector(
-    '#updated-project-image-url',
+  const certTitle = document.getElementById('cert-title');
+  const certImage = document.getElementById('cert-image-url');
+  const certDescription = document.getElementById('cert-description');
+  const addCertBtn = document.getElementById('add-cert-btn');
+  const updatedCertTitle = document.querySelector('#updated-cert-title');
+  const updatedCertImage = document.querySelector('#updated-cert-image-url');
+  const updatedCertDescription = document.querySelector(
+    '#updated-cert-description',
   );
-  const updatedProjectDescription = document.querySelector(
-    '#updated-project-description',
-  );
-  const updatedProjectLink = document.querySelector('#updated-project-url');
   const cancelUpdateBtn = document.querySelector('#cancel-update-btn');
   const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
+  const certContainer = document.querySelector('.cert-container');
 
   //State Management
-  let currentProjectId;
+  let currentCertId;
 
   // Loading spinner functions
   function showLoading() {
@@ -202,25 +198,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Show add new project modal
-  addNewProjectBtn?.addEventListener('click', () => {
-    showModal('add-projectModal');
+  // Show add new cert modal
+  addNewCertBtn?.addEventListener('click', () => {
+    showModal('add-certModal');
   });
 
-  // Function to send projectData
-  async function sendProjectData() {
-    const projectData = {
-      title: projectTitle.value.trim(),
-      description: projectDescription.value.trim(),
-      imageUrl: projectImage.value.trim(),
-      link: projectLink.value.trim(),
+  //Function to send certificate data
+  async function sendCertData() {
+    const certData = {
+      title: certTitle.value.trim(),
+      description: certDescription.value.trim(),
+      imageUrl: certImage.value.trim(),
     };
-
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/projects/',
-        projectData,
+        'http://localhost:5000/certificates/',
+        certData,
       );
 
       if (response.success === false) {
@@ -231,95 +225,82 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       alertMess('error', error.message);
     } finally {
-      hideModal('add-projectModal');
+      hideModal('add-certModal');
     }
   }
 
-  // Send project data
-  addProjectBtn?.addEventListener('click', () => {
-    sendProjectData();
+  // Send cert data
+  addCertBtn?.addEventListener('click', () => {
+    sendCertData();
   });
 
-  //Function to get all projects
-  async function getProjects() {
+  //Function to get all certs
+  async function getCerts() {
     try {
-      const response = await fetchData('http://localhost:5000/projects/');
+      const response = await fetchData('http://localhost:5000/certificates/');
       if (response.success === false) {
         alertMess('error', response.message);
       } else {
-        response.forEach((project) => {
-          const projectCard = document.createElement('div');
-          projectCard.className = 'card';
-          projectCard.dataset.projectId = project._id;
-          projectCard.dataset.projectTitle = project.title;
-          projectCard.dataset.projectImage = project.imageUrl;
-          projectCard.dataset.projectDescription = project.description;
-          projectCard.dataset.projectLink = project.link;
+        response.forEach((cert) => {
+          const certCard = document.createElement('div');
+          certCard.className = 'card';
+          certCard.dataset.certId = cert._id;
+          certCard.dataset.certTitle = cert.title;
+          certCard.dataset.certImage = cert.imageUrl;
+          certCard.dataset.certDescription = cert.description;
 
-          console.log(projectCard.dataset.projectDescription);
-
-          projectCard.innerHTML = `
-              <img src="${project.imageUrl}" class="card-img-top" alt="${
-            project.title
+          certCard.innerHTML = `
+                  <img src="${cert.imageUrl}" class="card-img-top" alt="${
+            cert.title
           }">
-              <div class="card-body">
-                <h5 class="card-title">${project.title}</h5>
-                <p class="card-description">${project.description.substring(
-                  0,
-                  50,
-                )}... </p>
-                <div class="card-btns">
-                  <button type="button" class="btn btn-light edit-project-btn" data-project-id="${
-                    project._id
-                  }" data-project-title="${
-            project.title
-          }" data-project-image="${
-            project.imageUrl
-          }" data-project-description="${
-            project.description
-          }" data-project-link=${project.link}>
-                    <img src="../images/edit-icon.svg" alt="edit icon" /> Edit
-                  </button>
-                  <button type="button" class="btn btn-outline-danger delete-project-btn" data-project-id="${
-                    project._id
-                  }">
-                    <img src="../images/delete.svg" alt="delete icon" /> Delete
-                  </button>
-                </div>
-              </div>
-            `;
+                  <div class="card-body">
+                    <h5 class="card-title">${cert.title}</h5>
+                    <p class="card-description">${cert.description.substring(
+                      0,
+                      50,
+                    )}... </p>
+                    <div class="card-btns">
+                      <button type="button" class="btn btn-light edit-cert-btn" data-cert-id="${
+                        cert._id
+                      }" data-cert-title="${cert.title}" data-cert-image="${
+            cert.imageUrl
+          }" data-cert-description="${cert.description}">
+                        <img src="../images/edit-icon.svg" alt="edit icon" /> Edit
+                      </button>
+                      <button type="button" class="btn btn-outline-danger delete-cert-btn" data-cert-id="${
+                        cert._id
+                      }">
+                        <img src="../images/delete.svg" alt="delete icon" /> Delete
+                      </button>
+                    </div>
+                  </div>
+                `;
 
-          projectContainer.appendChild(projectCard);
+          certContainer.appendChild(certCard);
         });
 
         // Add event listeners after all cards are created
-        document.querySelectorAll('.edit-project-btn').forEach((btn) => {
+        document.querySelectorAll('.edit-cert-btn').forEach((btn) => {
           btn.addEventListener('click', () => {
-            const projectId = btn.getAttribute('data-project-id');
-            const projectTitle = btn.getAttribute('data-project-title');
-            const projectImage = btn.getAttribute('data-project-image');
-            const projectLink = btn.getAttribute('data-project-link');
-            const projectDescription = btn.getAttribute(
-              'data-project-description',
-            );
+            const certId = btn.getAttribute('data-cert-id');
+            const certTitle = btn.getAttribute('data-cert-title');
+            const certImage = btn.getAttribute('data-cert-image');
+            const certDescription = btn.getAttribute('data-cert-description');
 
-            currentProjectId = projectId;
+            currentCertId = certId;
 
-            updatedProjectTitle.value = projectTitle;
-            updatedProjectImage.value = projectImage;
-            updatedProjectDescription.value = projectDescription;
-            updatedProjectLink.value = projectLink;
+            updatedCertTitle.value = certTitle;
+            updatedCertImage.value = certImage;
+            updatedCertDescription.value = certDescription;
 
-            console.log(projectDescription);
-
-            showModal('edit-projectModal');
+            showModal('edit-certModal');
           });
         });
 
-        document.querySelectorAll('.delete-project-btn').forEach((btn) => {
+        document.querySelectorAll('.delete-cert-btn').forEach((btn) => {
           btn.addEventListener('click', () => {
-            currentProjectId = btn.getAttribute('data-project-id');
-            showModal('delete-projectModal');
+            currentCertId = btn.getAttribute('data-cert-id');
+            showModal('delete-certModal');
           });
         });
       }
@@ -327,69 +308,69 @@ document.addEventListener('DOMContentLoaded', () => {
       alertMess('error', error.message);
     }
   }
-  getProjects();
 
-  // Function to update project
-  async function updateProject(id) {
+  getCerts();
+
+  // Function to update certificate
+  async function updateCert(id) {
     const updatedData = {
-      title: updatedProjectTitle.value.trim(),
-      imageUrl: updatedProjectImage.value.trim(),
-      description: updatedProjectDescription.value.trim(),
-      link: updatedProjectLink.value.trim(),
+      title: updatedCertTitle.value.trim(),
+      imageUrl: updatedCertImage.value.trim(),
+      description: updatedCertDescription.value.trim(),
     };
     try {
       const response = await postData(
         'PUT',
-        `http://localhost:5000/projects/${id}`,
+        `http://localhost:5000/certificates/${id}`,
         updatedData,
       );
       if (response.success === false) {
-        alertMess('success', response.message); 
+        alertMess('success', response.message);
       } else {
         alertMess('success', response.message);
-      };
+      }
     } catch (error) {
       alertMess('error', error.message);
     } finally {
-      hideModal('edit-projectModal');
-    }
-  }
-  // Function to delete project
-  async function deleteProject(id) {
-    try {
-      const response = await deleteData(
-        `http://localhost:5000/projects/${id}`
-      );
-      if (response.success === false) {
-        alertMess('success', response.message); 
-      } else {
-        alertMess('success', response.message);
-      };
-    } catch (error) {
-      alertMess('error', error.message);
-    } finally {
-      hideModal('delete-projectModal');
+      hideModal('edit-certModal');
     }
   }
 
-  //Close update project modal
+  // Function to delete cert
+  async function deleteCert(id) {
+    try {
+      const response = await deleteData(
+        `http://localhost:5000/certificates/${id}`,
+      );
+      if (response.success === false) {
+        alertMess('success', response.message);
+      } else {
+        alertMess('success', response.message);
+      }
+    } catch (error) {
+      alertMess('error', error.message);
+    } finally {
+      hideModal('delete-certModal');
+    }
+  }
+
+  //Close update cert modal
   cancelUpdateBtn?.addEventListener('click', () => {
-    hideModal('edit-projectModal');
+    hideModal('edit-certModal');
   });
 
   //confirm update button
   confirmUpdateBtn?.addEventListener('click', () => {
-    updateProject(currentProjectId);
+    updateCert(currentCertId);
   });
 
   //Close Delete Modal
   cancelDeleteBtn?.addEventListener('click', () => {
-    hideModal('delete-projectModal');
+    hideModal('delete-certModal');
   });
 
   //Confirm delete button
   confirmDeleteBtn?.addEventListener('click', () => {
-    deleteProject(currentProjectId);
-  })
-
+    deleteCert(currentCertId);
+  });
 });
