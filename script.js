@@ -34,9 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const projectsRect = projectsSection.getBoundingClientRect();
     if (projectsRect.top < window.innerHeight && projectsRect.bottom >= 0) {
-      setTimeout(() => {
-        projectsSection.classList.add('visible');
-      }, 500); // Add a delay of 500ms
+      projectsSection.classList.add('visible');
     }
 
     const certificationsRect = certificationsSection.getBoundingClientRect();
@@ -44,16 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
       certificationsRect.top < window.innerHeight &&
       certificationsRect.bottom >= 0
     ) {
-      setTimeout(() => {
-        certificationsSection.classList.add('visible');
-      }, 500); // Add a delay of 1000ms
+      certificationsSection.classList.add('visible');
     }
 
     const contactRect = contactSection.getBoundingClientRect();
     if (contactRect.top < window.innerHeight && contactRect.bottom >= 0) {
-      setTimeout(() => {
-        contactSection.classList.add('visible');
-      }, 500); // Add a delay of 1500ms
+      contactSection.classList.add('visible');
     }
   }
 
@@ -94,10 +88,10 @@ function closeFullscreen() {
 }
 
 // Year for footer
-const d = new Date();
-let year = d.getFullYear();
-document.getElementById('year').innerHTML = year;
+let year = new Date().getFullYear();
+document.getElementById('year').textContent = year;
 
+const API_URL = 'https://joseph-mensah-api.onrender.com';
 
 
 //function to fetch requests.
@@ -111,44 +105,41 @@ const fetchData = async (url) => {
 
     const response = await responses.json();
     results = response.data;
-
-    console.log(results);
   } catch (error) {
     console.log(error);
   }
   return results;
 };
 
-
 // Api fetch for Head Section
 const headImg = document.querySelector('#headImage');
 async function getHeadImage() {
-  const headImage = await fetchData('http://localhost:5000/head/image');
-headImg.innerHTML = `<img src=${headImage.image} alt="profile image">`;  
-};
+  const headImage = await fetchData(`${API_URL}/head/image`);
+  headImg.innerHTML = `<img src=${headImage.image} alt="profile image" loading="lazy">`;
+}
 getHeadImage();
 
 // Api fetch for About Section
 const about = document.querySelector('.about');
 async function getAboutContent() {
-  const content = await fetchData('http://localhost:5000/about/info');
+  const content = await fetchData(`${API_URL}/about/info`);
   about.innerHTML = `
    <h1>About Me</h1>
    <p>${content.aboutText}</p>
-   <a href=${content.resumeUrl} class="btn" target="_blank" rel="noopener noreferrer"> Download CV </a>
-  `
-};
+   <a href=${content.resumeUrl} class="btn" rel="noopener noreferrer"> Download CV </a>
+  `;
+}
 getAboutContent();
 
 // Api fetch for Skills Section
 const skills = document.querySelector('.skills');
 async function getSkills() {
-  const allSkill = await fetchData('http://localhost:5000/skills/');
-  allSkill.forEach(skill => {
+  const allSkill = (await fetchData(`${API_URL}/skills/`)) || [];
+  allSkill.forEach((skill) => {
     var skillCard = document.createElement('div');
     skillCard.className = 'card';
     skillCard.innerHTML = `
-    <img src=${skill.image} alt=${skill.name} >
+    <img src=${skill.image} alt=${skill.name} loading="lazy">
       <div class="overlay"> 
        <h2>${skill.name}</h2>
       </div>
@@ -156,40 +147,45 @@ async function getSkills() {
 
     skills.appendChild(skillCard);
   });
-};
+}
 getSkills();
 
 // Api fetch for Project Section
 const cardContainer = document.querySelector('.card-container');
 async function getProjects() {
-  const allProject = await fetchData('http://localhost:5000/projects/');
-  allProject.forEach(project => {
+  const allProject = (await fetchData(`${API_URL}/projects/`)) || [];
+  allProject.forEach((project) => {
     var card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-    <div class="image"><img src=${project.imageUrl} alt=${project.title} </div>
+    <div class="image"><img src=${project.imageUrl} alt=${
+      project.title
+    } loading="lazy" ></div>
       <h2> ${project.title} </h2>
-      <p> ${project.description} </p>
-      <a href=${project.link} class="btn" id="view-project-btn" target="_blank" rel="noopener noreferrer"> Visit </a> 
+      <p> ${project.description.slice(0, 150)}... </p>
+      <a href=${
+        project.link
+      } class="btn" id="view-project-btn" target="_blank" rel="noopener noreferrer"> Visit </a> 
     `;
     cardContainer.appendChild(card);
   });
-};
+}
 getProjects();
 
 // Api fetch for Certificate Section
 const certCardContainer = document.querySelector('#certContainer');
 async function getCertificates() {
-  const allCert = await fetchData('http://localhost:5000/certificates/');
-  allCert.forEach(cert => {
+  const allCert =
+    (await fetchData(`${API_URL}/certificates/`)) || [];
+  allCert.forEach((cert) => {
     var certCard = document.createElement('div');
     certCard.className = 'card';
     certCard.innerHTML = `
-     <div class="image"><img src=${cert.imageUrl} alt=${cert.title} onclick="openFullscreen(this)"></div>
+     <div class="image"><img src=${cert.imageUrl} alt=${cert.title} onclick="openFullscreen(this)" loading="lazy" ></div>
      <h2>Data Analysis Certificate</h2>
      <p>${cert.description}</p>
     `;
     certCardContainer.appendChild(certCard);
   });
-};
+}
 getCertificates();

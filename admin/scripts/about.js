@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const updatedResumeUrl = document.querySelector('#update-resume-url');
   const confirmUpdateBtn = document.querySelector('#update-content-btn');
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = window.origin + '/admin/index.html';
+    return;
+  }
+
   // Loading spinner functions
   function showLoading() {
     loadingSpinner?.classList.add('show');
@@ -99,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify(data),
       });
@@ -117,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Server is taking too long to respond. Please try again later.',
         );
       }
-      throw new Error(`Error sending request: ${error.message}`);
+      throw new Error(`${error.message}`);
     } finally {
       hideLoading();
     }
@@ -164,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alertMessage.innerHTML = `
       <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong>${message}</strong> 
+        <small>${message}</small> 
       </div>`;
 
     // Auto hide after 5 seconds

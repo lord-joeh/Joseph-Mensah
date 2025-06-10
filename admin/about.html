@@ -27,7 +27,7 @@
         >
           <li class="nav-item" role="presentation">
             <button
-              onclick="location.replace('admin.html')"
+              onclick="window.history.back()"
               class="nav-link rounded-5"
               id="back-tab2"
               data-bs-toggle="tab"
@@ -41,7 +41,7 @@
           </li>
           <li class="nav-item" role="presentation">
             <button
-              onclick="location.reload()"
+              onclick="window.location.reload()"
               class="nav-link active rounded-5"
               id="head-tab2"
               data-bs-toggle="tab"
@@ -54,7 +54,7 @@
           </li>
           <li class="nav-item" role="presentation">
             <button
-              onclick="location.replace('admin.html')"
+              onclick="window.location.href= window.origin + '/admin/admin.html'"
               class="nav-link rounded-5"
               id="contact-tab2"
               data-bs-toggle="tab"
@@ -124,7 +124,6 @@
           </div>
         </div>
 
-
         <!--Update content Modal-->
         <div id="updateModal" class="modal">
           <div class="modal-content">
@@ -162,7 +161,7 @@
                 class="btn btn-outline-light"
                 aria-label="Cancel update"
               >
-              <img src="../images/close-icon.svg" alt="" aria-hidden="true" />
+                <img src="../images/close-icon.svg" alt="" aria-hidden="true" />
                 Cancel
               </button>
               <button
@@ -171,7 +170,12 @@
                 class="btn btn-success"
                 aria-label="Update content"
               >
-                <img src="../images/edit-icon-white.svg" alt="" aria-hidden="true" /> Update
+                <img
+                  src="../images/edit-icon-white.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                Update
               </button>
             </div>
           </div>

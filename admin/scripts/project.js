@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = window.origin + '/admin/index.html';
+    return;
+  }
+
   //State Management
   let currentProjectId;
 
@@ -65,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify(data),
       });
@@ -83,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Server is taking too long to respond. Please try again later.',
         );
       }
-      throw new Error(`Error sending request: ${error.message}`);
+      throw new Error(`${error.message}`);
     } finally {
       hideLoading();
     }
@@ -96,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
       });
 
@@ -156,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alertMessage.innerHTML = `
               <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <strong>${message}</strong> 
+                <small>${message}</small> 
               </div>`;
 
     // Auto hide after 5 seconds
@@ -264,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }">
               <div class="card-body">
                 <h5 class="card-title">${project.title}</h5>
-                <p class="card-description">${project.description.substring(
+                <p class="card-description">${project.description.slice(
                   0,
                   50,
                 )}... </p>
@@ -344,10 +352,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updatedData,
       );
       if (response.success === false) {
-        alertMess('success', response.message); 
+        alertMess('success', response.message);
       } else {
         alertMess('success', response.message);
-      };
+      }
     } catch (error) {
       alertMess('error', error.message);
     } finally {
@@ -357,14 +365,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to delete project
   async function deleteProject(id) {
     try {
-      const response = await deleteData(
-        `http://localhost:5000/projects/${id}`
-      );
+      const response = await deleteData(`http://localhost:5000/projects/${id}`);
       if (response.success === false) {
-        alertMess('success', response.message); 
+        alertMess('success', response.message);
       } else {
         alertMess('success', response.message);
-      };
+      }
     } catch (error) {
       alertMess('error', error.message);
     } finally {
@@ -390,6 +396,5 @@ document.addEventListener('DOMContentLoaded', () => {
   //Confirm delete button
   confirmDeleteBtn?.addEventListener('click', () => {
     deleteProject(currentProjectId);
-  })
-
+  });
 });

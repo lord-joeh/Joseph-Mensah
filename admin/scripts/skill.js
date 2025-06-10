@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = window.origin + '/admin/index.html';
+    return;
+  }
+
   //State Management
   let currentSkillName = '';
   let currentSkillImage = '';
@@ -59,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify(data),
       });
@@ -90,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
       });
 
@@ -150,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alertMessage.innerHTML = `
           <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <strong>${message}</strong> 
+            <small>${message}</small> 
           </div>`;
 
     // Auto hide after 5 seconds
@@ -241,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         // Clear existing skills
         skillContainer.innerHTML = '';
-        
+
         response.forEach((skill) => {
           const skillCard = document.createElement('div');
           skillCard.className = 'card';
@@ -268,26 +276,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Add event listeners after all cards are created
-        document.querySelectorAll('.edit-skill-btn').forEach(btn => {
+        document.querySelectorAll('.edit-skill-btn').forEach((btn) => {
           btn.addEventListener('click', () => {
             const skillId = btn.getAttribute('data-skill-id');
             const skillName = btn.getAttribute('data-skill-name');
             const skillImage = btn.getAttribute('data-skill-image');
-            
+
             currentSkillId = skillId;
             currentSkillName = skillName;
             currentSkillImage = skillImage;
-            
+
             updatedSkillName.value = skillName;
             updatedSkillImage.value = skillImage;
-            
+
             showModal('edit-skillModal');
           });
         });
 
-        document.querySelectorAll('.delete-skill-btn').forEach(btn => {
+        document.querySelectorAll('.delete-skill-btn').forEach((btn) => {
           btn.addEventListener('click', () => {
-            currentSkillId =btn.getAttribute('data-skill-id');
+            currentSkillId = btn.getAttribute('data-skill-id');
             showModal('delete-skillModal');
           });
         });

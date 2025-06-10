@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
   const loadingSpinner = document.querySelector('#loading-spinner');
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = window.origin + '/admin/index.html';
+    return;
+  }
+
   // Loading spinner functions
   function showLoading() {
     loadingSpinner?.classList.add('show');
@@ -33,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alertMessage.innerHTML = `
       <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <strong>${message}</strong> 
+        <small>${message}</small> 
       </div>`;
 
     // Auto hide after 5 seconds
@@ -93,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: token,
         },
         body: JSON.stringify(data),
       });
@@ -116,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
         method: method,
         headers: {
           'Content-Type': 'application/json',
-        }
+          Authorization: token,
+        },
       });
 
       if (!response.ok) {

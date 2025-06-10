@@ -24,7 +24,7 @@ header {
 }
 
 .box-container {
-    max-width: 500px;
+    max-width: 800px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -32,8 +32,8 @@ header {
 }
 
 .box {
-    height: 100px;
-    width: 150px;
+    height: 150px;
+    width: 250px;
     background-color: #E0E0E0;
     border-radius: 8px;
     display: flex;
