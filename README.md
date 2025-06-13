@@ -2,8 +2,6 @@
 
 A modern, responsive portfolio website showcasing my skills, projects, and professional journey as a software developer.
 
-![Portfolio Preview](images/preview.png)
-
 ## 🌟 Features
 
 - **Responsive Design**: Fully responsive layout that works seamlessly across all devices
