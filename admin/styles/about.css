@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.body-container {
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-about-content-btn {
+  width: 400px;
+}
+
+/* The Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal Content*/
+.modal-content {
+  background-color: #1e1e1e;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #2a2a2a;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #e0e0e0;
+  border-radius: 8px;
+}
+
+/* The Close Button */
+.close {
+  color: #e0e0e0;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.close:hover,
+.close:focus {
+  color: #eb2121;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+
+.loading-spinner {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner.show {
+  display: flex;
+}
+
+.spinner-content {
+  text-align: center;
+}
+
+.spinner-content p {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.loading-spinner {
+  z-index: 2000;
+}
+
+#add-content-btn {
+  width: 50%;
+  position: relative;
+  left: 50%;
+}
+
+.about-info {
+  width: 100%;
+}
+
+#confirm-update-btn {
+  position: relative;
+  width: 50%;
+  left: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  color: #e0e0e0;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+  }
+  
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+
+  #add-about-content-btn {
+    width: 90%;
+  }
+
+  #add-content-btn {
+    left: 0;
+    width: 100%;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+
+  .about-info {
+    width: 90%;
+  }
+
+  #confirm-update-btn {
+    width: 100%;
+    left: 0;
+  }
+}

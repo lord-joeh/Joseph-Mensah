@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin-project</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles/project.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="navbar">
+        <ul
+          class="nav nav-pills nav-fill gap-2 p-1 small rounded-5 shadow-sm"
+          id="pillNav2"
+          role="tablist"
+          style="
+            --bs-nav-link-color: #121212;
+            --bs-nav-pills-link-active-color: #e0e0e0;
+            --bs-nav-pills-link-active-bg: #121212;
+          "
+        >
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="window.history.back()"
+              class="nav-link rounded-5"
+              id="back-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              <img src="../images/arrow_back.svg" alt="arrow back" width="30" />
+              Back
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="window.location.reload()"
+              class="nav-link active rounded-5"
+              id="head-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <img src="../images/refresh.svg" alt="arrow back" /> Projects
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              onclick="window.location.href= window.origin + '/admin/admin.html'"
+              class="nav-link rounded-5"
+              id="contact-tab2"
+              data-bs-toggle="tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              <img src="../images/home.svg" alt="home" width="30" /> Home
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="body-container">
+      <div class="container">
+        <div class="alert"></div>
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="loading-spinner">
+          <div class="spinner-content">
+            <div class="spinner-border text-light" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-light">Processing...</p>
+          </div>
+        </div>
+
+        <!--Modal to new project-->
+        <div id="add-projectModal" class="modal">
+          <div class="modal-content">
+            <span class="close" data-modal="add-projectModal">&times;</span>
+            <h3 id="modal-heading">Add New Project</h3>
+
+            <label for="project-title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Project Title"
+              aria-label="text"
+              aria-describedby="add-visible-addon"
+              id="project-title"
+            />
+
+            <label for="project-image-url" class="form-label">Image</label>
+            <div class="input-group">
+              <span class="input-group-text" id="add-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paste project image URL here"
+                aria-label="link"
+                aria-describedby="add-visible-addon"
+                id="project-image-url"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="project-description" class="form-label"
+                >Description</label
+              >
+              <textarea
+                class="form-control"
+                id="project-description"
+                rows="3"
+                placeholder="Enter project description"
+              ></textarea>
+            </div>
+
+            <label for="project-url" class="form-label">Live Link</label>
+            <div class="input-group">
+              <span class="input-group-text" id="add-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Paste project link here"
+                aria-label="link"
+                aria-describedby="add-visible-addon"
+                id="project-url"
+              />
+            </div>
+
+            <hr />
+            <button
+              type="submit"
+              id="add-project-btn"
+              class="btn btn-outline-light"
+            >
+              Add Project <img src="../images/send.svg" alt="send icon" />
+            </button>
+          </div>
+        </div>
+
+        <!--Modal to update project-->
+        <div id="edit-projectModal" class="modal">
+          <div class="modal-content">
+            <span class="close" data-modal="edit-projectModal">&times;</span>
+            <h3 id="modal-heading">Update Project</h3>
+
+            <label for="updated-project-title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              aria-label="text"
+              aria-describedby="add-visible-addon"
+              id="updated-project-title"
+            />
+
+            <label for="updated-project-image-url" class="form-label"
+              >Image</label
+            >
+            <div class="input-group">
+              <span class="input-group-text" id="add-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                aria-label="link"
+                aria-describedby="add-visible-addon"
+                id="updated-project-image-url"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="updated-project-description" class="form-label"
+                >Description</label
+              >
+              <textarea
+                class="form-control"
+                id="updated-project-description"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <label for="updated-project-url" class="form-label"
+              >Live Link</label
+            >
+            <div class="input-group">
+              <span class="input-group-text" id="add-visible-addon">
+                <img src="../images/link.svg" alt="link" />
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                aria-label="link"
+                aria-describedby="add-visible-addon"
+                id="updated-project-url"
+              />
+            </div>
+
+            <hr />
+            <div class="modal-buttons">
+              <button
+                type="button"
+                id="cancel-update-btn"
+                class="btn btn-outline-light"
+                aria-label="Cancel update"
+              >
+                <img src="../images/close-icon.svg" alt="" aria-hidden="true" />
+                Cancel
+              </button>
+              <button
+                type="submit"
+                id="confirm-update-btn"
+                class="btn btn-success"
+                aria-label="Confirm Update"
+              >
+                <img
+                  src="../images/edit-icon-white.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--Delete project modal-->
+        <div id="delete-projectModal" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="delete-projectModal">&times;</span>
+                <h3 id="modal-heading">Delete Project</h3>
+
+                <p>Are you sure you want to delete this is project?</p>
+
+            </hr>
+            <div class="modal-buttons">
+                <button
+                  type="button"
+                  id="cancel-delete-btn"
+                  class="btn btn-outline-light"
+                  aria-label="Cancel delete"
+                >
+                  <img src="../images/close-icon.svg" alt="" aria-hidden="true" />
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  id="confirm-delete-btn"
+                  class="btn btn-danger"
+                  aria-label="Confirm delete"
+                >
+                  <img
+                    src="../images/delete.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  Confirm Delete
+                </button>
+            </div>
+
+            </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-light"
+          id="add-new-project-btn"
+        >
+          Add New Project
+          <img src="../images/add_circle.svg" alt="add circle" />
+        </button>
+
+        <div class="project-container"></div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <script src="scripts/project.js"></script>
+  </body>
+</html>
