@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadingSpinner = document.querySelector('#loading-spinner');
   const alertMessage = document.querySelector('.alert');
   const loginForm = document.querySelector('form');
+  const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
-
 
   // Loading spinner functions
   function showLoading() {
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/auth/login',
+        `${API_URL}/auth/login`,
         loginData,
       );
       localStorage.setItem('token', response.token);

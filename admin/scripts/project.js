@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
+    const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -227,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/projects/',
+        `${API_URL}/projects/`,
         projectData,
       );
 
@@ -251,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //Function to get all projects
   async function getProjects() {
     try {
-      const response = await fetchData('http://localhost:5000/projects/');
+      const response = await fetchData(`${API_URL}/projects/`);
       if (response.success === false) {
         alertMess('error', response.message);
       } else {
@@ -348,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'PUT',
-        `http://localhost:5000/projects/${id}`,
+        `${API_URL}/projects/${id}`,
         updatedData,
       );
       if (response.success === false) {
@@ -365,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to delete project
   async function deleteProject(id) {
     try {
-      const response = await deleteData(`http://localhost:5000/projects/${id}`);
+      const response = await deleteData(`${API_URL}/projects/${id}`);
       if (response.success === false) {
         alertMess('success', response.message);
       } else {

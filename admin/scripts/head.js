@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelEditBtn = document.querySelector('#cancel-edit-btn');
   const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
   const loadingSpinner = document.querySelector('#loading-spinner');
+  const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Close buttons event listeners
-  closeBtns.forEach(btn => {
+  closeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const modalId = btn.dataset.modal;
       hideModal(modalId);
@@ -171,11 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const response = await postData(
-        'POST',
-        'http://localhost:5000/head/add-image',
-        { image }
-      );
+      const response = await postData('POST', `${API_URL}/head/add-image`, {
+        image,
+      });
 
       if (response.success === false) {
         alertMess('error', response.message);
@@ -194,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await deleteData(
         'DELETE',
-        'http://localhost:5000/head/delete-image'
+        `${API_URL}/head/delete-image`,
       );
 
       if (response.success === false) {
@@ -219,11 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const response = await postData(
-        'PUT',
-        'http://localhost:5000/head/update-image',
-        { image }
-      );
+      const response = await postData('PUT', `${API_URL}/head/update-image`, {
+        image,
+      });
 
       if (response.success === false) {
         alertMess('error', response.message);
@@ -248,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headContainer.removeChild(headContainer.firstChild);
       }
 
-      const head = await fetchData('http://localhost:5000/head/image');
+      const head = await fetchData(`${API_URL}/head/image`);
       if (!head || !head.image) {
         alertMess('error', 'No image found');
         return;
