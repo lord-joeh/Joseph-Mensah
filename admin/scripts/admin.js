@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
-      window.location.replace('admin.html');
+      window.location.replace('/admin/admin.html');
       alertMess('success', response.message);
     } catch (error) {
       alertMess('error', error.message);
