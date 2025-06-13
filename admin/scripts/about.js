@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updatedAboutText = document.querySelector('#update-about-text');
   const updatedResumeUrl = document.querySelector('#update-resume-url');
   const confirmUpdateBtn = document.querySelector('#update-content-btn');
+  const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -250,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/about/add-content',
+        `${API_URL}/about/add-content`,
         aboutData,
       );
       if (response.success === false) {
@@ -268,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch about Info
   async function fetchAboutInfo() {
     try {
-      const response = await fetchData('http://localhost:5000/about/info');
+      const response = await fetchData(`${API_URL}/about/info`);
       currentAboutText = response.aboutText;
       currentResumeUrl = response.resumeUrl;
 
@@ -366,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'PUT',
-        'http://localhost:5000/about/edit-content',
+        `${API_URL}/about/edit-content`,
         updatedAboutData,
       );
       if (response.success === false) {

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
   const certContainer = document.querySelector('.cert-container');
+  const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -221,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/certificates/',
+        '${API_URL}/certificates/',
         certData,
       );
 
@@ -245,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //Function to get all certs
   async function getCerts() {
     try {
-      const response = await fetchData('http://localhost:5000/certificates/');
+      const response = await fetchData(`${API_URL}/certificates/`);
       if (response.success === false) {
         alertMess('error', response.message);
       } else {
@@ -329,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'PUT',
-        `http://localhost:5000/certificates/${id}`,
+        `${API_URL}/certificates/${id}`,
         updatedData,
       );
       if (response.success === false) {
@@ -347,9 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to delete cert
   async function deleteCert(id) {
     try {
-      const response = await deleteData(
-        `http://localhost:5000/certificates/${id}`,
-      );
+      const response = await deleteData(`${API_URL}/certificates/${id}`);
       if (response.success === false) {
         alertMess('success', response.message);
       } else {

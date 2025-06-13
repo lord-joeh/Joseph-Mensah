@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
   const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
   const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
+    const API_URL = 'https://joseph-mensah-api.onrender.com';
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -218,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'POST',
-        'http://localhost:5000/skills/create',
+        `${API_URL}/skills/create`,
         skillData,
       );
 
@@ -242,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to get all skills
   async function getSkills() {
     try {
-      const response = await fetchData('http://localhost:5000/skills/');
+      const response = await fetchData(`${API_URL}/skills/`);
 
       if (response.success === false) {
         alertMess('error', response.message);
@@ -315,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await postData(
         'PUT',
-        `http://localhost:5000/skills/update/${id}`,
+        `${API_URL}/skills/update/${id}`,
         updatedSkillData,
       );
 
@@ -341,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const response = await deleteData(
-        `http://localhost:5000/skills/delete/${id}`,
+        `${API_URL}/skills/delete/${id}`,
       );
       if (response.success === false) {
         alertMess('error', response.message);
