@@ -50,11 +50,13 @@ portfolio/
 ## 🚀 Getting Started
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/lord-joeh/portfolio.git
    ```
 
 2. **Start the backend server**
+
    ```bash
    cd admin
    npm install
@@ -68,6 +70,7 @@ portfolio/
 ## 🔧 API Endpoints
 
 The portfolio uses the following API endpoints:
+
 - `GET /head/image` - Fetches hero section image
 - `GET /about/info` - Fetches about section content
 - `GET /skills/` - Fetches skills data
@@ -77,6 +80,7 @@ The portfolio uses the following API endpoints:
 ## 📱 Contact
 
 Feel free to reach out through any of these channels:
+
 - LinkedIn: [Joseph Tetteh Mensah](https://www.linkedin.com/in/joseph-tetteh-mensah-31a258322/)
 - GitHub: [lord-joeh](https://github.com/lord-joeh/)
 - WhatsApp: [+233256269405](http://wa.me/+233256269405)
@@ -91,6 +95,5 @@ This project is open source and available under the MIT License.
 - Font Awesome for icons
 - Google Fonts for typography
 - SweetAlert2 for beautiful alerts
-- EmailJS for contact form functionality
 
 ---

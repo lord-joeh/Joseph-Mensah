@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
     try {
       sendBtn.textContent = 'Sending...';
       sendBtn.toggleAttribute('disable');
-      const response = await fetch('http://localhost:5000/notifications/', {
+      const response = await fetch(`${API_URL}/notifications/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/json',
