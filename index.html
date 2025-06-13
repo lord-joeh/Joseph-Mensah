@@ -9,7 +9,7 @@
     <meta name="title" content="Joseph Mensah | Software Developer Portfolio" />
     <meta
       name="description"
-      content="Professional portfolio of Joseph Mensah, a skilled Software Developer specializing in web development, featuring projects, skills, and certifications."
+      content="Explore the portfolio of Joseph Mensah, a Full Stack Developer. Crafting immersive digital wonders using JavaScript, React.js, and Node.js."
     />
     <meta
       name="keywords"
@@ -130,18 +130,90 @@
     </section>
 
     <section id="services">
-      <div class="services skills">
-        <h1>My Services</h1>
+      <div class="services">
+        <h1>Services</h1>
         <p>Let's bring your ideas to life, together</p>
 
         <div class="service-container">
-          <div class="service"></div>
-          <div class="service"></div>
-          <div class="service"></div>
-          <div class="service"></div>
-          <div class="service"></div>
-          <div class="service"></div>
-          <div class="service"></div>
+          <div class="service-card card">
+            <div class="service">
+              <img class="service-image-f" src="/images/stack.svg" alt="" />
+              <p>Full-Stack Development</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              I build complete web applications, from stunning front-end
+              interfaces to robust back-end systems. Whether you need a simple
+              website or a complex platform, I'll bring your vision to life.
+            </p>
+          </div>
+
+          <div class="service-card card">
+            <div class="service">
+              <img class="service-image-f" src="/images/monitor.svg" alt="" />
+              <p>Frontend Development</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              Your users deserve a smooth and engaging experience. I create
+              responsive, user-friendly designs that work seamlessly across all
+              devices, with a focus on modern technologies like React.s
+            </p>
+          </div>
+
+          <div class="service-card card">
+            <div class="service">
+              <img
+                class="service-image-f"
+                src="/images/server-icon.png"
+                alt=""
+              />
+              <p>Backend Development</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              Behind every great app is a powerful engine. I specialize in
+              building secure, scalable APIs and databases that keep everything
+              running smoothly, using Node.js, NoSQL and SQL.
+            </p>
+          </div>
+
+          <div class="service-card card">
+            <div class="service">
+              <img class="service-image-f" src="/images/send.svg" alt="" />
+              <p>Deployment and Maintenance</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              I don't stop at building. I deploy your app, keep it updated, and
+              ensure it stays secure and reliable as your needs evolve.
+            </p>
+          </div>
+
+          <div class="service-card card">
+            <div class="service">
+              <img class="service-image-f" src="/images/plug.png" alt="" />
+              <p>API integration</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              Need to connect third-party services to your app? I handle
+              seamless integrations to make sure everything works together, from
+              payment systems to data services.
+            </p>
+          </div>
+
+          <div class="service-card card">
+            <div class="service">
+              <img class="service-image-f" src="/images/bug.png" alt="" />
+              <p>Debugging</p>
+              <img class="service-image" src="/images/plus.png" alt="" />
+            </div>
+            <p class="service-description">
+              Got an issue with your current app? I'll dive in, troubleshoot,
+              and fix it—quickly and effectively.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -172,11 +244,11 @@
       <div class="contact">
         <h1>Contact</h1>
         <form id="contactForm">
-          <input type="text" name="name" placeholder="Name" required /><br />
-          <input type="email" name="email" placeholder="Email" required /><br />
-          <textarea name="message" placeholder="Message" required></textarea
+          <input type="text" id="name" placeholder="Name" required /><br />
+          <input type="email" id="email" placeholder="Email" required /><br />
+          <textarea id="message" placeholder="Message" required></textarea
           ><br />
-          <button type="submit">Send</button>
+          <button id="form-btn" type="submit">Send</button>
         </form>
         <div class="contact-fa">
           <a
@@ -223,46 +295,9 @@
         target="_blank"
         class="fa fa-github"
       ></a>
-      <a
-        href="https://is.gd/X0CE3z"
-        target="_blank"
-        class="fa fa-whatsapp"
-      ></a>
+      <a href="https://is.gd/X0CE3z" target="_blank" class="fa fa-whatsapp"></a>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.all.min.js"></script>
     <script src="script.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.emailjs.com/dist/email.min.js"
-    ></script>
-    <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function () {
-        emailjs.init('TAF4Lj4Py6yX83IC8');
-
-        document
-          .getElementById('contactForm')
-          .addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            emailjs.sendForm('service_1s8rqlv', 'template_bpnaktq', this).then(
-              function () {
-                Swal.fire({
-                  title: 'Message sent successfully!',
-                  icon: 'success',
-                  draggable: false,
-                });
-                document.getElementById('contactForm').reset();
-              },
-              function (error) {
-                Swal.fire({
-                  title: 'Failed to send message!',
-                  icon: 'error',
-                  draggable: false,
-                });
-              },
-            );
-          });
-      });
-    </script>
   </body>
 </html>

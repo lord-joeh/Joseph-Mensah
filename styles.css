@@ -307,6 +307,75 @@ img {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
+/* service section style */
+.services {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  max-width: 1000px;
+  border-radius: 12px;
+  opacity: 0;
+  text-align: center;
+  transform: translateY(100%);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.services.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.service {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 50px;
+  height: fit-content;
+  border: 1px solid #121212;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-description {
+  display: none;
+  text-align: left;
+  padding: 15px;
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-image-f,
+.service-image {
+  width: 35px;
+  padding: 4px;
+}
+
 /* Projects section styles */
 .projects {
   display: grid;
@@ -330,7 +399,8 @@ img {
   transform: translateX(0);
 }
 
-.projects h1 {
+.projects h1,
+.services h1 {
   margin-bottom: 20px;
   font-family: 'DM Serif Display', serif;
   font-weight: 700;
@@ -735,6 +805,10 @@ footer .fa:hover,
   .nav-toggle.active .hamburger::after {
     transform: rotate(90deg) translateX(-10px);
   }
+
+  .service-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
@@ -787,7 +861,45 @@ footer .fa:hover,
   .skills,
   .projects,
   .certifications,
-  .contact {
+  .contact,
+  .services {
     width: 90%;
+  }
+
+  .service-container {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .service {
+    height: 50px;
+    width: 100%;
+  }
+}
+
+/* Service animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
   }
 }
