@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const headImg = document.querySelector('#headImage');
   async function getHeadImage() {
     const headImage = await fetchData(`${API_URL}/head/image`);
-    headImg.innerHTML = `<img src=${headImage.image} alt="profile image" loading="lazy">`;
+    headImg.innerHTML = `<img src=${headImage.image} alt="profile image"> || <img src="./images/Joseph Tetteh Mensah_photo.JPG">`;
   }
   getHeadImage();
 
