@@ -1,27 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const alertMessage = document.querySelector('.alert');
-  const addNewCertBtn = document.querySelector('#add-new-cert-btn');
-  const loadingSpinner = document.querySelector('#loading-spinner');
-  const closeBtns = document.querySelectorAll('.close');
-  const certTitle = document.getElementById('cert-title');
-  const certImage = document.getElementById('cert-image-url');
-  const certDescription = document.getElementById('cert-description');
-  const addCertBtn = document.getElementById('add-cert-btn');
-  const updatedCertTitle = document.querySelector('#updated-cert-title');
-  const updatedCertImage = document.querySelector('#updated-cert-image-url');
+document.addEventListener("DOMContentLoaded", () => {
+  const alertMessage = document.querySelector(".alert");
+  const addNewCertBtn = document.querySelector("#add-new-cert-btn");
+  const loadingSpinner = document.querySelector("#loading-spinner");
+  const closeBtns = document.querySelectorAll(".close");
+  const certTitle = document.getElementById("cert-title");
+  const certImage = document.getElementById("cert-image-url");
+  const certDescription = document.getElementById("cert-description");
+  const addCertBtn = document.getElementById("add-cert-btn");
+  const updatedCertTitle = document.querySelector("#updated-cert-title");
+  const updatedCertImage = document.querySelector("#updated-cert-image-url");
   const updatedCertDescription = document.querySelector(
-    '#updated-cert-description',
+    "#updated-cert-description"
   );
-  const cancelUpdateBtn = document.querySelector('#cancel-update-btn');
-  const confirmUpdateBtn = document.querySelector('#confirm-update-btn');
-  const cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
-  const confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
-  const certContainer = document.querySelector('.cert-container');
-  const API_URL = 'https://joseph-mensah-api.onrender.com';
+  const cancelUpdateBtn = document.querySelector("#cancel-update-btn");
+  const confirmUpdateBtn = document.querySelector("#confirm-update-btn");
+  const cancelDeleteBtn = document.querySelector("#cancel-delete-btn");
+  const confirmDeleteBtn = document.querySelector("#confirm-delete-btn");
+  const certContainer = document.querySelector(".cert-container");
+  const API_URL = "https://joseph-mensah-api.onrender.com";
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
-    window.location.href = window.origin + '/admin/index.html';
+    window.location.href = window.origin + "/admin/index.html";
     return;
   }
 
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Loading spinner functions
   function showLoading() {
-    loadingSpinner?.classList.add('show');
+    loadingSpinner?.classList.add("show");
   }
 
   function hideLoading() {
-    loadingSpinner?.classList.remove('show');
+    loadingSpinner?.classList.remove("show");
   }
 
   // Enhanced fetch with timeout
@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return response;
     } catch (error) {
       clearTimeout(id);
-      if (error.name === 'AbortError') {
+      if (error.name === "AbortError") {
         throw new Error(
-          'Request timed out. Please check your internet connection.',
+          "Request timed out. Please check your internet connection."
         );
       }
       throw error;
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetchWithTimeout(url, {
         method: method,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: token,
         },
         body: JSON.stringify(data),
@@ -76,15 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || `Request failed with status ${response.status}`,
+          errorData.message || `Request failed with status ${response.status}`
         );
       }
 
       return await response.json();
     } catch (error) {
-      if (error.message.includes('timed out')) {
+      if (error.message.includes("timed out")) {
         throw new Error(
-          'Server is taking too long to respond. Please try again later.',
+          "Server is taking too long to respond. Please try again later."
         );
       }
       throw new Error(`${error.message}`);
@@ -97,9 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showLoading();
     try {
       const response = await fetchWithTimeout(url, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: token,
         },
       });
@@ -107,15 +107,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || `Request failed with status ${response.status}`,
+          errorData.message || `Request failed with status ${response.status}`
         );
       }
 
       return await response.json();
     } catch (error) {
-      if (error.message.includes('timed out')) {
+      if (error.message.includes("timed out")) {
         throw new Error(
-          'Server is taking too long to respond. Please try again later.',
+          "Server is taking too long to respond. Please try again later."
         );
       }
       throw new Error(`Error sending request: ${error.message}`);
@@ -132,19 +132,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || `Request failed with status ${response.status}`,
+          errorData.message || `Request failed with status ${response.status}`
         );
       }
 
       const data = await response.json();
       if (!data || !data.data) {
-        throw new Error('Invalid response format from server');
+        throw new Error("Invalid response format from server");
       }
       return data.data;
     } catch (error) {
-      if (error.message.includes('timed out')) {
+      if (error.message.includes("timed out")) {
         throw new Error(
-          'Server is taking too long to respond. Please try again later.',
+          "Server is taking too long to respond. Please try again later."
         );
       }
       throw new Error(`Error fetching data: ${error.message}`);
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function alertMess(status, message) {
     if (!alertMessage) return;
 
-    const alertClass = status === 'success' ? 'alert-success' : 'alert-danger';
+    const alertClass = status === "success" ? "alert-success" : "alert-danger";
     alertMessage.innerHTML = `
               <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -166,9 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto hide after 5 seconds
     setTimeout(() => {
-      const alertElement = alertMessage.querySelector('.alert');
+      const alertElement = alertMessage.querySelector(".alert");
       if (alertElement) {
-        alertElement.classList.add('fade');
+        alertElement.classList.add("fade");
         setTimeout(() => {
           alertElement.remove();
         }, 150);
@@ -180,20 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function showModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-      modal.style.display = 'block';
+      modal.style.display = "block";
     }
   }
 
   function hideModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-      modal.style.display = 'none';
+      modal.style.display = "none";
     }
   }
 
   // Close modal when clicking outside
-  window.addEventListener('click', (event) => {
-    if (event.target.classList.contains('modal')) {
+  window.addEventListener("click", (event) => {
+    if (event.target.classList.contains("modal")) {
       const modalId = event.target.id;
       hideModal(modalId);
     }
@@ -201,15 +201,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close buttons event listeners
   closeBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener("click", () => {
       const modalId = btn.dataset.modal;
       hideModal(modalId);
     });
   });
 
   // Show add new cert modal
-  addNewCertBtn?.addEventListener('click', () => {
-    showModal('add-certModal');
+  addNewCertBtn?.addEventListener("click", () => {
+    showModal("add-certModal");
   });
 
   //Function to send certificate data
@@ -221,25 +221,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     try {
       const response = await postData(
-        'POST',
-        '${API_URL}/certificates/',
-        certData,
+        "POST",
+        `${API_URL}/certificates/`,
+        certData
       );
 
       if (response.success === false) {
-        alertMess('error', response.message);
+        alertMess("error", response.message);
       } else {
-        alertMess('success', response.message);
+        alertMess("success", response.message);
       }
     } catch (error) {
-      alertMess('error', error.message);
+      alertMess("error", error.message);
     } finally {
-      hideModal('add-certModal');
+      hideModal("add-certModal");
     }
   }
 
   // Send cert data
-  addCertBtn?.addEventListener('click', () => {
+  addCertBtn?.addEventListener("click", () => {
     sendCertData();
   });
 
@@ -248,11 +248,11 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await fetchData(`${API_URL}/certificates/`);
       if (response.success === false) {
-        alertMess('error', response.message);
+        alertMess("error", response.message);
       } else {
         response.forEach((cert) => {
-          const certCard = document.createElement('div');
-          certCard.className = 'card';
+          const certCard = document.createElement("div");
+          certCard.className = "card";
           certCard.dataset.certId = cert._id;
           certCard.dataset.certTitle = cert.title;
           certCard.dataset.certImage = cert.imageUrl;
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h5 class="card-title">${cert.title}</h5>
                     <p class="card-description">${cert.description.substring(
                       0,
-                      50,
+                      50
                     )}... </p>
                     <div class="card-btns">
                       <button type="button" class="btn btn-light edit-cert-btn" data-cert-id="${
@@ -289,12 +289,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Add event listeners after all cards are created
-        document.querySelectorAll('.edit-cert-btn').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const certId = btn.getAttribute('data-cert-id');
-            const certTitle = btn.getAttribute('data-cert-title');
-            const certImage = btn.getAttribute('data-cert-image');
-            const certDescription = btn.getAttribute('data-cert-description');
+        document.querySelectorAll(".edit-cert-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const certId = btn.getAttribute("data-cert-id");
+            const certTitle = btn.getAttribute("data-cert-title");
+            const certImage = btn.getAttribute("data-cert-image");
+            const certDescription = btn.getAttribute("data-cert-description");
 
             currentCertId = certId;
 
@@ -302,19 +302,19 @@ document.addEventListener('DOMContentLoaded', () => {
             updatedCertImage.value = certImage;
             updatedCertDescription.value = certDescription;
 
-            showModal('edit-certModal');
+            showModal("edit-certModal");
           });
         });
 
-        document.querySelectorAll('.delete-cert-btn').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            currentCertId = btn.getAttribute('data-cert-id');
-            showModal('delete-certModal');
+        document.querySelectorAll(".delete-cert-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentCertId = btn.getAttribute("data-cert-id");
+            showModal("delete-certModal");
           });
         });
       }
     } catch (error) {
-      alertMess('error', error.message);
+      alertMess("error", error.message);
     }
   }
 
@@ -329,19 +329,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     try {
       const response = await postData(
-        'PUT',
+        "PUT",
         `${API_URL}/certificates/${id}`,
-        updatedData,
+        updatedData
       );
       if (response.success === false) {
-        alertMess('success', response.message);
+        alertMess("success", response.message);
       } else {
-        alertMess('success', response.message);
+        alertMess("success", response.message);
       }
     } catch (error) {
-      alertMess('error', error.message);
+      alertMess("error", error.message);
     } finally {
-      hideModal('edit-certModal');
+      hideModal("edit-certModal");
     }
   }
 
@@ -350,34 +350,34 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await deleteData(`${API_URL}/certificates/${id}`);
       if (response.success === false) {
-        alertMess('success', response.message);
+        alertMess("success", response.message);
       } else {
-        alertMess('success', response.message);
+        alertMess("success", response.message);
       }
     } catch (error) {
-      alertMess('error', error.message);
+      alertMess("error", error.message);
     } finally {
-      hideModal('delete-certModal');
+      hideModal("delete-certModal");
     }
   }
 
   //Close update cert modal
-  cancelUpdateBtn?.addEventListener('click', () => {
-    hideModal('edit-certModal');
+  cancelUpdateBtn?.addEventListener("click", () => {
+    hideModal("edit-certModal");
   });
 
   //confirm update button
-  confirmUpdateBtn?.addEventListener('click', () => {
+  confirmUpdateBtn?.addEventListener("click", () => {
     updateCert(currentCertId);
   });
 
   //Close Delete Modal
-  cancelDeleteBtn?.addEventListener('click', () => {
-    hideModal('delete-certModal');
+  cancelDeleteBtn?.addEventListener("click", () => {
+    hideModal("delete-certModal");
   });
 
   //Confirm delete button
-  confirmDeleteBtn?.addEventListener('click', () => {
+  confirmDeleteBtn?.addEventListener("click", () => {
     deleteCert(currentCertId);
   });
 });
