@@ -223,8 +223,8 @@ document.addEventListener("DOMContentLoaded", function () {
       var certCard = document.createElement("div");
       certCard.className = "card";
       certCard.innerHTML = `
-     <div class="image"><img src=${cert.imageUrl} alt=${cert.title} onclick="openFullscreen(this)" loading="lazy" ></div>
-     <h2>Data Analysis Certificate</h2>
+     <div class="image"><img src=${cert.imageUrl} alt=${cert.title} onclick="openFullscreen(this)" loading="lazy"></div>
+     <h2>${cert.title}</h2>
      <p>${cert.description}</p>
     `;
       certCardContainer.appendChild(certCard);
