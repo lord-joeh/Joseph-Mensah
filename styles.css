@@ -95,7 +95,7 @@ body {
   align-items: center;
   padding: 50px 20px;
   background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .hero .text {
@@ -238,8 +238,7 @@ img {
   border-radius: 12px;
   text-align: center;
   opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 1s ease-out, transform 1s ease-out;
+  transition: slideInBottom 1s ease-out, transform 1s ease-out;
 }
 
 .skills.visible {
