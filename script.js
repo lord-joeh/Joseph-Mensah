@@ -1,283 +1,253 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var element = document.getElementById("typewriter");
-  var text = element.textContent;
-  var length = text.length;
-  var character = 0;
-
-  element.textContent = ""; // Clear the initial text
-
-  (function typeWriter() {
-    if (character < length) {
-      element.textContent += text.charAt(character);
-      character++;
-      setTimeout(typeWriter, 100);
-    }
-  })();
-
-  // Detect when the about, skills, projects, certifications, and contact sections are in the viewport
-  const aboutSection = document.querySelector(".about");
-  const skillsSection = document.querySelector(".skills");
-  const projectsSection = document.querySelector(".projects");
-  const certificationsSection = document.querySelector(".certifications");
-  const contactSection = document.querySelector(".contact");
-  const serviceSection = document.querySelector(".services");
-
-  function checkVisibility() {
-    const aboutRect = aboutSection.getBoundingClientRect();
-    if (aboutRect.top < window.innerHeight && aboutRect.bottom >= 0) {
-      aboutSection.classList.add("visible");
-    }
-
-    const skillsRect = skillsSection.getBoundingClientRect();
-    if (skillsRect.top < window.innerHeight && skillsRect.bottom >= 0) {
-      skillsSection.classList.add("visible");
-    }
-
-    const projectsRect = projectsSection.getBoundingClientRect();
-    if (projectsRect.top < window.innerHeight && projectsRect.bottom >= 0) {
-      projectsSection.classList.add("visible");
-    }
-
-    const certificationsRect = certificationsSection.getBoundingClientRect();
-    if (
-      certificationsRect.top < window.innerHeight &&
-      certificationsRect.bottom >= 0
-    ) {
-      certificationsSection.classList.add("visible");
-    }
-
-    const contactRect = contactSection.getBoundingClientRect();
-    if (contactRect.top < window.innerHeight && contactRect.bottom >= 0) {
-      contactSection.classList.add("visible");
-    }
-    const serviceRect = serviceSection.getBoundingClientRect();
-    if (serviceRect.top < window.innerHeight && serviceRect.bottom >= 0) {
-      serviceSection.classList.add("visible");
-    }
-  }
-
-  window.addEventListener("scroll", checkVisibility);
-  window.addEventListener("resize", checkVisibility);
-  checkVisibility(); // Initial check
-
-  // Handle hamburger menu toggle
-  const navToggle = document.querySelector(".nav-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  const navLinkItems = document.querySelectorAll(".nav-links a");
-
-  navToggle.addEventListener("click", () => {
-    navToggle.classList.toggle("active");
-    navLinks.classList.toggle("active");
-  });
-
-  navLinkItems.forEach((link) => {
-    link.addEventListener("click", () => {
-      navToggle.classList.remove("active");
-      navLinks.classList.remove("active");
-    });
-  });
-
-  //service script
-  const serviceCards = document.querySelectorAll(".service-card");
-
-  serviceCards.forEach((card) => {
-    const plusIcon = card.querySelector('.service img[src*="plus"]');
-    const description = card.querySelector(".service-description");
-
-    plusIcon.addEventListener("click", () => {
-      // Hide all other descriptions and reset icons
-      serviceCards.forEach((otherCard) => {
-        if (otherCard !== card) {
-          const otherIcon = otherCard.querySelector(".service-image");
-          const otherDesc = otherCard.querySelector(".service-description");
-          if (otherIcon && otherDesc) {
-            otherIcon.src = "/images/plus.png";
-            otherDesc.style.animation = "slideUp 0.3s ease-in-out forwards";
-            setTimeout(() => {
-              otherDesc.style.display = "none";
-            }, 300);
-          }
-        }
-      });
-
-      // Toggle current card
-      if (plusIcon.src.includes("plus.png")) {
-        plusIcon.src = "/images/dash.png";
-        description.style.display = "block";
-        description.style.animation = "slideDown 0.3s ease-in-out forwards";
-      } else {
-        plusIcon.src = "/images/plus.png";
-        description.style.animation = "slideUp 0.3s ease-in-out forwards";
-        setTimeout(() => {
-          description.style.display = "none";
-        }, 300);
-      }
-    });
-  });
-
-  // Fullscreen functions
-  function openFullscreen(imgElement) {
-    const fullscreenContainer = document.getElementById("fullscreenContainer");
-    const fullscreenImage = document.getElementById("fullscreenImage");
-
-    fullscreenImage.src = imgElement.src;
-    fullscreenContainer.style.display = "flex";
-  }
-
-  function closeFullscreen() {
-    const fullscreenContainer = document.getElementById("fullscreenContainer");
-    fullscreenContainer.style.display = "none";
-  }
-
-  // Year for footer
-  let year = new Date().getFullYear();
-  document.getElementById("year").textContent = year;
-
+document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "https://joseph-mensah-api.onrender.com";
 
-  //function to fetch requests.
-  const fetchData = async (url) => {
-    let results;
-    try {
-      const responses = await fetch(url);
-      if (!responses.ok) {
-        throw new Error(`Error sending request: ${error.message}`);
-      }
+  const initTypewriter = () => {
+    const element = document.getElementById("typewriter");
+    if (!element) return;
 
-      const response = await responses.json();
-      results = response.data;
-    } catch (error) {
-      console.log(error);
-    }
-    return results;
+    const text = element.textContent;
+    let character = 0;
+    element.textContent = "";
+
+    const type = () => {
+      if (character < text.length) {
+        element.textContent += text.charAt(character++);
+        setTimeout(type, 100);
+      }
+    };
+    type();
   };
 
-  // Api fetch for Head Section
-  const headImg = document.querySelector("#headImage");
-  async function getHeadImage() {
-    const headImage = await fetchData(`${API_URL}/head/image`);
-    headImage
-      ? (headImg.innerHTML = `<img src=${headImage.image} alt="profile image">`)
-      : (headImg.innerHTML = `<img src="./images/Joseph Tetteh Mensah_photo.JPG">`);
-  }
-  getHeadImage();
+  const initScrollAnimations = () => {
+    const observerOptions = { threshold: 0.1 };
 
-  // Api fetch for About Section
-  const about = document.querySelector(".about");
-  async function getAboutContent() {
-    const content = await fetchData(`${API_URL}/about/info`);
-    about.innerHTML = `
-   <h1>About Me</h1>
-   <p>${content.aboutText}</p>
-   <a href=${content.resumeUrl} class="btn" rel="noopener noreferrer"> Download CV </a>
-  `;
-  }
-  getAboutContent();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
 
-  // Api fetch for Skills Section
-  const skills = document.querySelector(".skills");
-  async function getSkills() {
-    const allSkill = (await fetchData(`${API_URL}/skills/`)) || [];
-    allSkill.forEach((skill) => {
-      var skillCard = document.createElement("div");
-      skillCard.className = "card";
-      skillCard.innerHTML = `
-    <img src=${skill.image} alt=${skill.name} loading="lazy">
-      <div class="overlay"> 
-       <h2>${skill.name}</h2>
-      </div>
-    `;
-
-      skills.appendChild(skillCard);
+    const sections = [
+      ".about",
+      ".skills",
+      ".projects",
+      ".certifications",
+      ".contact",
+      ".services",
+    ];
+    sections.forEach((selector) => {
+      const el = document.querySelector(selector);
+      if (el) observer.observe(el);
     });
-  }
-  getSkills();
+  };
 
-  // Api fetch for Project Section
-  const cardContainer = document.querySelector(".card-container");
-  async function getProjects() {
-    const allProject = (await fetchData(`${API_URL}/projects/`)) || [];
-    allProject.forEach((project) => {
-      var card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-    <div class="image"><img src=${project.imageUrl} alt=${
-        project.title
-      } loading="lazy" ></div>
-      <h2> ${project.title} </h2>
-      <p> ${project.description.slice(0, 150)}... </p>
-      <a href=${
-        project.link
-      } class="btn" id="view-project-btn" target="_blank" rel="noopener noreferrer"> Visit </a> 
-    `;
-      cardContainer.appendChild(card);
-    });
-  }
-  getProjects();
+  const initNavigation = () => {
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    const items = document.querySelectorAll(".nav-links a");
 
-  // Api fetch for Certificate Section
-  const certCardContainer = document.querySelector("#certContainer");
-  async function getCertificates() {
-    const allCert = (await fetchData(`${API_URL}/certificates/`)) || [];
-    allCert.forEach((cert) => {
-      var certCard = document.createElement("div");
-      certCard.className = "card";
-      certCard.innerHTML = `
-     <div class="image"><img src=${cert.imageUrl} alt=${cert.title} onclick="openFullscreen(this)" loading="lazy"></div>
-     <h2>${cert.title}</h2>
-     <p>${cert.description}</p>
-    `;
-      certCardContainer.appendChild(certCard);
-    });
-  }
-  getCertificates();
-
-  //Contact Form
-  const contactName = document.querySelector("#name");
-  const contactEmail = document.querySelector("#email");
-  const contactMessage = document.querySelector("#message");
-  const contactForm = document.querySelector("form");
-  const sendBtn = document.querySelector("#form-btn");
-
-  contactForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = {
-      name: contactName.value.trim(),
-      email: contactEmail.value.trim(),
-      message: contactMessage.value.trim(),
+    const closeMenu = () => {
+      navToggle?.classList.remove("active");
+      navLinks?.classList.remove("active");
     };
 
-    try {
-      sendBtn.textContent = "Sending...";
-      sendBtn.toggleAttribute("disable");
-      const response = await fetch(`${API_URL}/notifications/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(formData),
+    navToggle?.addEventListener("click", () => {
+      navToggle.classList.toggle("active");
+      navLinks.classList.toggle("active");
+    });
+
+    items.forEach((link) => link.addEventListener("click", closeMenu));
+  };
+
+  const initServices = () => {
+    const cards = document.querySelectorAll(".service-card");
+
+    cards.forEach((card) => {
+      const plusIcon = card.querySelector('.service img[src*="plus"]');
+      const description = card.querySelector(".service-description");
+
+      plusIcon?.addEventListener("click", () => {
+        cards.forEach((other) => {
+          if (other !== card) {
+            const icon = other.querySelector(".service-image");
+            const desc = other.querySelector(".service-description");
+            if (icon && desc && icon.src.includes("dash.png")) {
+              icon.src = "/images/plus.png";
+              desc.classList.remove("open");
+            }
+          }
+        });
+
+        const isOpen = plusIcon.src.includes("dash.png");
+        plusIcon.src = isOpen ? "./images/plus.png" : "./images/dash.png";
+
+        if (isOpen) {
+          description.classList.remove("open");
+        } else {
+          description.classList.add("open");
+        }
       });
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
+    });
+  };
+
+  window.openFullscreen = (img) => {
+    const container = document.getElementById("fullscreenContainer");
+    const viewImg = document.getElementById("fullscreenImage");
+    if (container && viewImg) {
+      viewImg.src = img.src;
+      container.style.display = "flex";
+    }
+  };
+
+  window.closeFullscreen = () => {
+    const container = document.getElementById("fullscreenContainer");
+    if (container) container.style.display = "none";
+  };
+
+  const fetchData = async (endpoint) => {
+    try {
+      const res = await fetch(`${API_URL}${endpoint}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      return json.data;
+    } catch (err) {
+      console.error(`Fetch error at ${endpoint}:`, err);
+      return null;
+    }
+  };
+
+  const populateContent = async () => {
+    const [headData, aboutData, skillsData, projectsData, certsData] =
+      await Promise.all([
+        fetchData("/head/image"),
+        fetchData("/about/info"),
+        fetchData("/skills/"),
+        fetchData("/projects/"),
+        fetchData("/certificates/"),
+      ]);
+
+    // Head
+    const headBox = document.querySelector("#headImage");
+    if (headBox) {
+      headBox.innerHTML = `<img src="${
+        headData?.image || "./images/default.JPG"
+      }" alt="Profile">`;
+    }
+
+    // About
+    const aboutBox = document.querySelector(".about");
+    if (aboutBox && aboutData) {
+      aboutBox.innerHTML = `<h1>About Me</h1>
+      <p>${aboutData.aboutText}</p>
+      <a href="${aboutData.resumeUrl}" class="btn" rel="noopener">Download CV</a>`;
+    }
+
+    // Skills
+    const skillsBox = document.querySelector(".skills");
+    skillsData?.forEach((s) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<img src="${s.image}" alt="${s.name}" loading="lazy">
+                       <div class="overlay"><h2>${s.name}</h2></div>`;
+      skillsBox?.appendChild(div);
+    });
+
+    // Projects
+    const projectsBox = document.querySelector(".card-container");
+    projectsData?.forEach((p) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<div class="image"><img src="${p.imageUrl}" alt="${
+        p.title
+      }" loading="lazy"></div>
+                       <h2>${p.title}</h2><p>${p.description.slice(
+        0,
+        150
+      )}...</p>
+                       <a href="${
+                         p.link
+                       }" class="view-project-btn" target="_blank">Visit</a>`;
+      projectsBox?.appendChild(div);
+    });
+
+    // Certificates
+    const certsBox = document.querySelector("#certContainer");
+    certsData?.forEach((c) => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `<div class="image"><img src="${c.imageUrl}" onclick="openFullscreen(this)" loading="lazy"></div>
+                       <h2>${c.title}</h2><p>${c.description}</p>`;
+      certsBox?.appendChild(div);
+    });
+  };
+
+  // Contact Form Handler
+  const initContactForm = () => {
+    const form = document.getElementById("contactForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        Swal.fire({
+          icon: "warning",
+          title: "Missing Fields",
+          text: "Please fill in all fields before submitting.",
+        });
+        return;
       }
 
-      const results = await response.json();
-      results.success
-        ? Swal.fire({
-            title: `${results.message}`,
+      const submitBtn = document.getElementById("form-btn");
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_URL}/notifications`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message }),
+        });
+
+        if (res.ok) {
+          Swal.fire({
             icon: "success",
-            draggable: false,
-          })
-        : Swal.fire({
-            title: "Failed to send message!",
-            icon: "error",
-            draggable: false,
+            title: "Message Sent!",
+            text: "Thank you for reaching out.",
           });
-    } catch (error) {
-      throw new Error(`${error.message}`);
-    } finally {
-      sendBtn.textContent = "Send";
-      contactForm.reset();
-    }
-  });
+        } else {
+          throw new Error("Failed to send message");
+        }
+      } catch (err) {
+        console.error("Contact form error:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops!",
+          text: "Something went wrong. Please try again later.",
+        });
+      } finally {
+        form.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  };
+
+  initTypewriter();
+  initScrollAnimations();
+  initNavigation();
+  initServices();
+  initContactForm();
+  populateContent();
+
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
