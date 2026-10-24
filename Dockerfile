@@ -1,5 +1,5 @@
 # Stage 1: Build React App
-FROM node:current-alpine AS builder
+FROM node:26-bookworm-slim AS builder
 
 WORKDIR /app
 COPY package*.json ./
