@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -10,54 +10,96 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1.5rem",
+        sm: "2rem",
+        lg: "3rem",
+        xl: "4rem",
+      },
       screens: {
-        "2xl": "1400px",
+        "2xl": "1440px",
       },
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        // Master Palette
+        canvas: "#101113",
+        surface: {
+          DEFAULT: "#17181A",
+          elevated: "#1E2023",
+          subtle: "#141517",
+          border: "#292A2C",
+        },
+        lime: {
+          DEFAULT: "#D5FF62",
+          accent: "#D5FF62",
+          glow: "rgba(213, 255, 98, 0.18)",
+          dim: "#A3D432",
+        },
+        content: {
+          primary: "#F5F5F0",
+          secondary: "#929292",
+          muted: "#6B6C6E",
+        },
+
+        // Shadcn UI Semantic Mapping
+        border: "#292A2C",
+        input: "#292A2C",
+        ring: "#D5FF62",
+        background: "#101113",
+        foreground: "#F5F5F0",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#D5FF62",
+          foreground: "#101113",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#1E2023",
+          foreground: "#F5F5F0",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#EF4444",
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#17181A",
+          foreground: "#929292",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#D5FF62",
+          foreground: "#101113",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#17181A",
+          foreground: "#F5F5F0",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#17181A",
+          foreground: "#F5F5F0",
         },
       },
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        display: ["var(--font-space-grotesk)", "var(--font-inter)", "sans-serif"],
+      },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "0.75rem",
+        md: "0.5rem",
+        sm: "0.25rem",
+      },
+      letterSpacing: {
+        tightest: "-0.04em",
+        tighter: "-0.02em",
+        tight: "-0.01em",
+        normal: "0",
+        wide: "0.02em",
+        wider: "0.05em",
+        widest: "0.1em",
+      },
+      animation: {
+        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "spin-slow": "spin 12s linear infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
-
+};
