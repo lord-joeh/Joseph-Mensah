@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
@@ -112,12 +113,14 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
       {/* Main Hero Visual Showcase */}
       <div className="rounded-2xl overflow-hidden bg-surface border border-surface-border shadow-2xl p-3 sm:p-4 group">
         <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-surface-elevated">
-          <img
+          <Image
             src={caseStudy.image}
             alt={caseStudy.title}
-            fetchPriority="high"
-            decoding="async"
-            className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+            quality={85}
+            className="object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-canvas/40 via-transparent to-transparent pointer-events-none" />
         </div>

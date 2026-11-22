@@ -41,7 +41,7 @@ export default {
         content: {
           primary: "#F5F5F0",
           secondary: "#929292",
-          muted: "#6B6C6E",
+          muted: "#8E9094",
           inverted: "#101113",
         },
 

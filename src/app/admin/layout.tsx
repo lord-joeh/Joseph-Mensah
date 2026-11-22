@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/lib/supabase/AuthContext';
+import { useAuth, AuthProvider } from '@/lib/supabase/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard,
@@ -28,7 +28,7 @@ const NAV_ITEMS = [
   { href: '/admin/notifications', label: 'Inquiries', icon: Mail },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { session, user, loading, signOut } = useAuth();
@@ -198,5 +198,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {children}
       </main>
     </div>
+  );
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </AuthProvider>
   );
 }

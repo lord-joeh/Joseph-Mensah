@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/lib/supabase/AuthContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -114,10 +113,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-canvas text-content-primary antialiased selection:bg-lime/20 selection:text-lime">
-        <AuthProvider>
-          {children}
-          <Toaster richColors position="bottom-right" />
-        </AuthProvider>
+        {children}
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );

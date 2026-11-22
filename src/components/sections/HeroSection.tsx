@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,18 +21,18 @@ export function HeroSection({ about }: HeroSectionProps) {
     about?.profile_image_url || '/assets/profile/joseph-mensah.jpeg';
 
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
         staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        delayChildren: shouldReduceMotion ? 0 : 0.1,
+        delayChildren: shouldReduceMotion ? 0 : 0.05,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    hidden: { opacity: 1, y: shouldReduceMotion ? 0 : 12 },
     visible: {
       opacity: 1,
       y: 0,
@@ -45,14 +46,14 @@ export function HeroSection({ about }: HeroSectionProps) {
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-between pt-28 sm:pt-36 pb-12 sm:pb-16 overflow-hidden">
       {/* Ambient background glow & film grain */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-lime/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute bottom-1/3 -right-32 w-[30rem] h-[30rem] bg-lime/5 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-lime/10 rounded-full blur-[80px] sm:blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/3 -right-32 w-[30rem] h-[30rem] bg-lime/5 rounded-full blur-[90px] sm:blur-[160px] pointer-events-none -z-10" />
       <div className="absolute inset-0 film-grain pointer-events-none -z-10 opacity-60" />
 
       <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex-1 flex flex-col justify-center">
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
           className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center"
         >
@@ -151,12 +152,14 @@ export function HeroSection({ about }: HeroSectionProps) {
               {/* Portrait Container */}
               <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden bg-surface border border-surface-border shadow-2xl p-2.5">
                 <div className="relative w-full h-full rounded-xl overflow-hidden bg-surface-elevated">
-                  <img
+                  <Image
                     src={profileImg}
                     alt="Joseph Mensah — Software Engineer"
-                    fetchPriority="high"
-                    decoding="async"
-                    className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-cinematic"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 320px"
+                    quality={85}
+                    className="object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-cinematic"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-canvas/90 via-canvas/20 to-transparent pointer-events-none" />
 
