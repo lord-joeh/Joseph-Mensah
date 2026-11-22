@@ -9,6 +9,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { Button } from '@/components/ui/button';
 import { getProjectSlug } from '@/lib/projects/slugs';
+import { API_PROJECT_IMAGES } from '@/lib/case-studies/data';
 import type { Project } from '@/lib/api';
 
 export interface SelectedWorkSectionProps {
@@ -95,7 +96,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
               agroProject?.description ||
               'A three-sided agricultural and logistics marketplace connecting rural Ghanaian farmers directly with institutional commodity buyers and haulers. Engineered with real-time price discovery, automated Paystack escrow settlement, and SMS dispatch.'
             }
-            imageUrl={agroProject?.image_url || '/assets/projects/agromarket.png'}
+            imageUrl={agroProject?.image_url || API_PROJECT_IMAGES.agromarket}
             tags={agroTags}
             slug="agromarket"
             liveUrl={agroProject?.link || undefined}
@@ -123,7 +124,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                 cvProject?.description ||
                 'An intelligent resume creation platform transforming raw work history into ATS-optimized, high-conversion developer resumes using Gemini AI inference, schema validation, and headless Puppeteer PDF rendering.'
               }
-              imageUrl={cvProject?.image_url || '/assets/projects/cv-builder.png'}
+              imageUrl={cvProject?.image_url || API_PROJECT_IMAGES['cv-builder']}
               tags={cvTags}
               slug="cv-builder"
               liveUrl={cvProject?.link || 'https://cv-builder.dev-joseph.me'}
@@ -139,7 +140,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                 zeeProject?.description ||
                 'A premium e-commerce storefront prototype crafted for an Accra Lapaz creator gear retailer. Features responsive catalog discovery, interactive bag drawers, and admin demo controls.'
               }
-              imageUrl={zeeProject?.image_url || '/assets/projects/zee-essentials.png'}
+              imageUrl={zeeProject?.image_url || API_PROJECT_IMAGES['zee-essentials']}
               tags={zeeTags}
               slug="zee-essentials"
               liveUrl={zeeProject?.link || 'https://zee-essentials-prototype.vercel.app/'}
@@ -155,7 +156,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                 adepaProject?.description ||
                 'A modern digital storefront prototype built for a Kumasi Adum footwear brand, bringing streetwear sneaker discovery, category filtering, and shopping bag interactions into one polished interface.'
               }
-              imageUrl={adepaProject?.image_url || '/assets/projects/adepa.png'}
+              imageUrl={adepaProject?.image_url || API_PROJECT_IMAGES['adepa-wc-mpaboa']}
               tags={adepaTags}
               slug="adepa-wc-mpaboa"
               liveUrl={adepaProject?.link || 'https://adepa-wc-mpaboa.vercel.app/'}

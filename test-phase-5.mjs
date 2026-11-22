@@ -8,7 +8,7 @@ if (!fs.existsSync(screenshotDir)) {
 }
 
 async function runPhase5Tests() {
-  console.log('Starting Phase 5 Verification Test Suite...');
+  console.log('Starting Phase 5 & API Image Verification Test Suite...');
   const browser = await puppeteer.launch({
     headless: true,
     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -19,12 +19,12 @@ async function runPhase5Tests() {
     const page = await browser.newPage();
 
     // -----------------------------------------------------------
-    // 1. Homepage Featured Projects Order
+    // 1. Homepage Featured Projects & API Images
     // -----------------------------------------------------------
-    console.log('1. Verifying Homepage Featured Selection & Exact Order...');
+    console.log('1. Verifying Homepage Featured Selection & Live Supabase Image URLs...');
     await page.setViewport({ width: 1440, height: 900 });
     await page.goto('http://localhost:3000', { waitUntil: 'networkidle0' });
-    await new Promise((r) => setTimeout(r, 1000));
+    await new Promise((r) => setTimeout(r, 1200));
 
     // Scroll to #projects
     await page.evaluate(() => {
@@ -36,11 +36,21 @@ async function runPhase5Tests() {
     });
     await new Promise((r) => setTimeout(r, 800));
 
-    const featuredTitles = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('#projects article h3')).map(h => h.innerText.trim());
+    const featuredData = await page.evaluate(() => {
+      const cards = Array.from(document.querySelectorAll('#projects article'));
+      return cards.map((card) => {
+        const title = card.querySelector('h3')?.innerText.trim() || '';
+        const img = card.querySelector('img');
+        return {
+          title,
+          imgSrc: img ? img.src : null,
+          imgCurrentSrc: img ? img.currentSrc : null,
+        };
+      });
     });
 
-    console.log('Featured Titles on Homepage:', featuredTitles);
+    console.log('Featured Cards on Homepage:', JSON.stringify(featuredData, null, 2));
+
     const expectedOrder = [
       'AgroMarket',
       'AI-Powered CV Builder',
@@ -48,14 +58,19 @@ async function runPhase5Tests() {
       'Adepa Wc Mpaboa',
     ];
 
-    let orderMatches = true;
+    let allImagesValid = true;
     for (let i = 0; i < expectedOrder.length; i++) {
-      if (!featuredTitles[i] || !featuredTitles[i].includes(expectedOrder[i])) {
-        console.error(`Mismatch at index ${i}: expected "${expectedOrder[i]}", got "${featuredTitles[i]}"`);
-        orderMatches = false;
+      const item = featuredData[i];
+      if (!item || !item.title.includes(expectedOrder[i])) {
+        console.error(`Mismatch at index ${i}: expected "${expectedOrder[i]}", got "${item?.title}"`);
+        allImagesValid = false;
+      }
+      if (!item || !item.imgSrc || !item.imgSrc.includes('supabase.co')) {
+        console.error(`Image at index ${i} (${item?.title}) is NOT using Supabase storage URL: ${item?.imgSrc}`);
+        allImagesValid = false;
       }
     }
-    console.log('Exact 4-featured order verification:', orderMatches ? 'PASSED' : 'FAILED');
+    console.log('API Image Consumption check for Homepage Selected Work:', allImagesValid ? 'PASSED' : 'FAILED');
 
     await page.screenshot({
       path: path.join(screenshotDir, '01-homepage-featured-selection.png'),
@@ -69,6 +84,13 @@ async function runPhase5Tests() {
     await page.setViewport({ width: 1440, height: 900 });
     await page.goto('http://localhost:3000/projects/agromarket', { waitUntil: 'networkidle0' });
     await new Promise((r) => setTimeout(r, 800));
+
+    const agroImgSrc = await page.evaluate(() => document.querySelector('section img')?.src);
+    console.log('AgroMarket Case Study Hero Image:', agroImgSrc);
+    if (!agroImgSrc || !agroImgSrc.includes('supabase.co')) {
+      console.error('AgroMarket case study hero image does not use Supabase URL!');
+    }
+
     await page.screenshot({ path: path.join(screenshotDir, '02-agromarket-desktop.png') });
 
     await page.setViewport({ width: 390, height: 844 });
@@ -84,6 +106,13 @@ async function runPhase5Tests() {
     await page.setViewport({ width: 1440, height: 900 });
     await page.goto('http://localhost:3000/projects/cv-builder', { waitUntil: 'networkidle0' });
     await new Promise((r) => setTimeout(r, 800));
+
+    const cvImgSrc = await page.evaluate(() => document.querySelector('section img')?.src);
+    console.log('CV Builder Case Study Hero Image:', cvImgSrc);
+    if (!cvImgSrc || !cvImgSrc.includes('supabase.co')) {
+      console.error('CV Builder case study hero image does not use Supabase URL!');
+    }
+
     await page.screenshot({ path: path.join(screenshotDir, '04-cv-builder-desktop.png') });
 
     await page.setViewport({ width: 390, height: 844 });
@@ -99,6 +128,13 @@ async function runPhase5Tests() {
     await page.setViewport({ width: 1440, height: 900 });
     await page.goto('http://localhost:3000/projects/zee-essentials', { waitUntil: 'networkidle0' });
     await new Promise((r) => setTimeout(r, 800));
+
+    const zeeImgSrc = await page.evaluate(() => document.querySelector('section img')?.src);
+    console.log('Zee Essentials Case Study Hero Image:', zeeImgSrc);
+    if (!zeeImgSrc || !zeeImgSrc.includes('supabase.co')) {
+      console.error('Zee Essentials case study hero image does not use Supabase URL!');
+    }
+
     await page.screenshot({ path: path.join(screenshotDir, '06-zee-essentials-desktop.png') });
 
     await page.setViewport({ width: 390, height: 844 });
@@ -114,6 +150,13 @@ async function runPhase5Tests() {
     await page.setViewport({ width: 1440, height: 900 });
     await page.goto('http://localhost:3000/projects/adepa-wc-mpaboa', { waitUntil: 'networkidle0' });
     await new Promise((r) => setTimeout(r, 800));
+
+    const adepaImgSrc = await page.evaluate(() => document.querySelector('section img')?.src);
+    console.log('Adepa Case Study Hero Image:', adepaImgSrc);
+    if (!adepaImgSrc || !adepaImgSrc.includes('supabase.co')) {
+      console.error('Adepa case study hero image does not use Supabase URL!');
+    }
+
     await page.screenshot({ path: path.join(screenshotDir, '08-adepa-desktop.png') });
 
     await page.setViewport({ width: 390, height: 844 });

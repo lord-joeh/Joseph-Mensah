@@ -2,6 +2,24 @@ import type { CaseStudyData } from './types';
 import type { Project } from '@/lib/api';
 import { SLUG_ALIASES, getProjectSlug } from '@/lib/projects/slugs';
 
+/**
+ * Live canonical project image URLs hosted in Supabase Storage via the production NestJS API.
+ */
+export const API_PROJECT_IMAGES: Record<string, string> = {
+  agromarket:
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/251a8cfb-996e-4613-bbd7-16e3ee225ab3.png',
+  'cv-builder':
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/d77c736b-ad60-421b-af33-e433442b903c.png',
+  'zee-essentials':
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/ef65c485-48e8-4ff5-bae8-7e232323e880.png',
+  'adepa-wc-mpaboa':
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/06909a02-7848-46d0-b3c7-4efd77dca8cc.png',
+  'the-vault':
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/cb20e44a-4702-4e9e-86ea-8c9f72139bbc.png',
+  'course-rep':
+    'https://xckruzkltbawoksfmtbr.supabase.co/storage/v1/object/public/portfolio-assets/projects/c3e38aa3-3e4a-4324-bf9b-2ac40a9b2daa.png',
+};
+
 export const CASE_STUDIES: Record<string, CaseStudyData> = {
   agromarket: {
     slug: 'agromarket',
@@ -16,7 +34,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Lead Full-Stack & Mobile Engineer',
     clientContext: 'Ghanaian Agricultural Supply Chain',
     timeline: '6 Months Active Engineering',
-    image: '/assets/projects/agromarket.png',
+    image: API_PROJECT_IMAGES.agromarket,
     overview:
       'A multi-sided agricultural and logistics platform engineered to empower smallholder farmers in rural Ghana by connecting them directly with commercial commodity buyers, institutional food processors, and licensed logistics haulers without predatory middlemen.',
     problem:
@@ -118,7 +136,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Full-Stack Engineer & Architect',
     clientContext: 'Independent Digital Product',
     timeline: '3 Months Iterative Development',
-    image: '/assets/projects/cv-builder.png',
+    image: API_PROJECT_IMAGES['cv-builder'],
     liveUrl: 'https://cv-builder.dev-joseph.me',
     overview:
       'A high-performance full-stack resume platform that transforms unstructured career notes, unformatted work history, and raw project bullet points into ATS-optimized, recruiter-friendly developer resumes with real-time AI critique and pixel-perfect PDF export.',
@@ -218,7 +236,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Frontend Architect & UI Designer',
     clientContext: 'Zee Essentials Retail (Lapaz Showroom, Accra, Ghana)',
     timeline: '4 Weeks Prototype Delivery',
-    image: '/assets/projects/zee-essentials.png',
+    image: API_PROJECT_IMAGES['zee-essentials'],
     liveUrl: 'https://zee-essentials-prototype.vercel.app/',
     overview:
       'A bespoke e-commerce digital storefront prototype crafted for Zee Essentials, a retail enterprise based in Lapaz, Accra specializing in content creation equipment (studio video lighting, wireless microphones, heavy-duty tripods), salon furniture, and rechargeable electronics.',
@@ -316,7 +334,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Frontend Engineer & Creative Director',
     clientContext: 'Adepa Wc Mpaboa (Adum, Kumasi, Ghana)',
     timeline: '3 Weeks Design & Development',
-    image: '/assets/projects/adepa.png',
+    image: API_PROJECT_IMAGES['adepa-wc-mpaboa'],
     liveUrl: 'https://adepa-wc-mpaboa.vercel.app/',
     overview:
       'A modern digital storefront prototype built for Adepa Wc Mpaboa, a footwear brand headquartered in Adum, Kumasi, Ghana. The platform curates premium streetwear sneakers, designer slides, rugged combat boots, and luxury lifestyle accessories with high visual impact.',
@@ -412,7 +430,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Mobile Systems Engineer',
     clientContext: 'Privacy & Security Research',
     timeline: '4 Months Development',
-    image: '/assets/projects/the-vault.png',
+    image: API_PROJECT_IMAGES['the-vault'],
     overview:
       'A zero-knowledge encrypted messaging and credential management mobile application built for users requiring confidential communications and sensitive asset storage without exposing plaintext data to centralized servers.',
     problem:
@@ -488,7 +506,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     role: 'Full-Stack Developer',
     clientContext: 'University Academic Departments',
     timeline: '3 Months Development',
-    image: '/assets/projects/cv-builder.png',
+    image: API_PROJECT_IMAGES['course-rep'],
     liveUrl: 'https://rep.dev-joseph.me',
     overview:
       'A centralized academic communications platform engineered to coordinate timetable updates, lecturer announcements, and resource sharing across university course representative networks.',
@@ -599,7 +617,7 @@ export function getCaseStudy(
         role: 'Full-Stack Engineer',
         clientContext: 'Engineering Deployment',
         timeline: 'Completed Deployment',
-        image: match.image_url || '/assets/projects/cv-builder.png',
+        image: match.image_url || API_PROJECT_IMAGES['cv-builder'],
         liveUrl: match.link || undefined,
         githubUrl: match.github_link || undefined,
         overview: match.description,
