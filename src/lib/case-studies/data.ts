@@ -24,43 +24,43 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
   agromarket: {
     slug: 'agromarket',
     title: 'AgroMarket',
-    subtitle: 'Three-Sided Agricultural & Logistics Marketplace Platform',
-    category: 'Full-Stack & Mobile Ecosystem',
+    subtitle: 'Three-Sided Agricultural & Logistics Marketplace Architecture',
+    category: 'Full-Stack Ecosystem & Backend Architecture',
     status: 'production',
     statusLabel: 'Production Architecture',
     statusDescription:
-      'Multi-service architecture built with cross-platform mobile client, NestJS API gateway, Redis caching, Paystack escrow settlements, and PostgreSQL.',
+      'Multi-service backend architecture built with NestJS API gateway, Redis caching, Paystack payment processing, PostgreSQL TypeORM entities, and OTP delivery verification.',
     year: '2025 – Present',
-    role: 'Lead Full-Stack & Mobile Engineer',
-    clientContext: 'Ghanaian Agricultural Supply Chain',
+    role: 'Lead Full-Stack & Systems Engineer',
+    clientContext: 'Ghanaian Agricultural Supply Chain Systems',
     timeline: '6 Months Active Engineering',
     image: API_PROJECT_IMAGES.agromarket,
     overview:
-      'A multi-sided agricultural and logistics platform engineered to empower smallholder farmers in rural Ghana by connecting them directly with commercial commodity buyers, institutional food processors, and licensed logistics haulers without predatory middlemen.',
+      'A multi-sided agricultural and logistics platform engineered to empower smallholder farmers in Ghana by connecting them directly with commercial commodity buyers, institutional food processors, and verified logistics agents through transparent pricing, wallet ledgers, and delivery verification.',
     problem:
-      'Smallholder farmers in West Africa face severe post-harvest losses (up to 40% in grains and tubers) due to lack of market price transparency, fragmented haulage logistics, and payment settlement delays that stretch across weeks. Traditional paper-based transactions create severe cash-flow bottlenecks.',
+      'Smallholder farmers across West Africa encounter severe market inefficiencies, including opaque commodity pricing, fragmented transport logistics, and extended payment settlement cycles. Traditional informal transactions create high risk and cash-flow bottlenecks for both producers and commercial buyers.',
     objectives: [
-      'Eliminate exploitative middlemen by facilitating direct producer-to-buyer transactions.',
-      'Deploy real-time commodity price discovery backed by sub-second Redis caching.',
-      'Establish a secure escrow payment pipeline holding buyer funds until physical delivery verification.',
-      'Provide offline-first mobile sync capabilities for rural regions with intermittent 2G/3G connectivity.',
+      'Facilitate direct producer-to-buyer transactions through structured produce listings and order workflows.',
+      'Deploy high-throughput Redis caching to accelerate catalog discovery and reduce database query load.',
+      'Establish a platform-managed wallet ledger holding order funds until physical delivery verification.',
+      'Implement an authenticated delivery verification protocol ensuring transparent settlement for farmers and haulage agents.',
     ],
     architecture: {
       summary:
-        'Decoupled microservices architecture connecting a Flutter cross-platform mobile client to a modular NestJS API gateway, backed by PostgreSQL for transactional safety and Redis for in-memory price discovery.',
+        'Modular NestJS backend architecture connected to PostgreSQL for relational entity management and Redis for caching, BullMQ job processing, and token invalidation, designed to support web and mobile client interfaces.',
       frontend: [
-        'Flutter mobile application compiling to iOS and Android from a single unified codebase',
-        'Bloc state management pattern enforcing unidirectional data flow and deterministic UI states',
-        'Local SQLite / Hive cache enabling seamless offline crop logging and draft creation',
+        'Multi-client API architecture engineered to support responsive web dashboards and mobile clients',
+        'Strict DTO validation interfaces enforcing type consistency across buyer, farmer, and agent clients',
+        'Stateful order progression interfaces reflecting real-time delivery lifecycle transitions',
       ],
       backend: [
-        'NestJS modular backend with strict TypeScript DTOs and class-validator runtime checks',
-        'JWT-based role-based access control (RBAC) isolating Farmer, Buyer, Hauler, and Admin flows',
-        'Event-driven transaction processing utilizing BullMQ queues for asynchronous order settlement',
+        'NestJS modular backend with strict TypeScript DTOs, class-validator runtime checks, and TypeORM entities',
+        'JWT-based role-based access control (RBAC) isolating Farmer, Buyer, Agent, and Admin routes',
+        'Event-driven transaction processing utilizing BullMQ queues for asynchronous task execution',
       ],
       database: [
-        'PostgreSQL relational schema with foreign key constraints, atomic transactions, and audit trails',
-        'Redis in-memory store for high-throughput commodity pricing indices and token blacklisting',
+        'PostgreSQL relational schema with TypeORM entities for users, listings, orders, wallet balances, and transactions',
+        'Redis in-memory store for HTTP response caching, JWT token blacklisting, and OTP delivery-code caching',
       ],
       devops: [
         'Multi-stage Docker builds deployed on a self-managed DigitalOcean VPS',
@@ -70,49 +70,49 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     },
     keyFeatures: [
       {
-        title: 'Multi-Tier Role Dashboards',
+        title: 'Multi-Tier Role Access Control',
         description:
-          'Distinct interfaces tailored to specific actor personas: Farmers track harvest batches and incoming bids; Buyers browse certified crops with price comparisons; Drivers claim haulage routes based on geo-proximity.',
-        tag: 'Mobile & Web',
+          'Strictly isolated role-based access control (RBAC) for Farmers (crop inventory, order confirmations), Buyers (catalog checkout, address management), and Delivery Agents (route pickup, delivery fulfillment).',
+        tag: 'Backend Architecture',
       },
       {
-        title: 'Paystack Automated Escrow Settlements',
+        title: 'Platform-Managed Paystack Wallet Ledger',
         description:
-          'Payment engine integrating Paystack webhooks to lock buyer funds in escrow upon bid acceptance, releasing automated mobile money payouts to farmers and haulers once delivery is confirmed via QR handshake.',
+          'Payment engine integrating Paystack for checkout transactions. Funds are held in a platform-managed ledger until delivery confirmation, after which earnings are credited to internal farmer and agent wallets with automated Paystack Mobile Money transfer withdrawals.',
         tag: 'Fintech Integration',
       },
       {
-        title: 'Low-Bandwidth SMS & Push Notification Dispatch',
+        title: 'Dual-Channel Push & SMS Notifications',
         description:
-          'Dual notification pipeline using OneSignal for real-time mobile push alerts, coupled with an SMS Gateway API fallback that automatically dispatches text alerts to farmers when data connectivity drops.',
-        tag: 'Infrastructure',
+          'Notification pipeline integrating OneSignal for authenticated push notifications, coupled with an external SMS Gateway API fallback to dispatch text alerts for order status transitions.',
+        tag: 'Notification Systems',
       },
       {
-        title: 'Real-Time Price Discovery Index',
+        title: 'High-Performance Redis In-Memory Layer',
         description:
-          'Live commodity exchange board pulling wholesale market averages across major regional markets (Techiman, Kumasi, Accra), powered by Redis in-memory caching for zero-latency lookups.',
-        tag: 'Data Architecture',
+          'Redis caching layer providing sub-second HTTP response caching, JWT token blacklisting for secure logouts, BullMQ background job queues, and temporary OTP delivery-code storage with a 7-day TTL.',
+        tag: 'Caching & Performance',
       },
     ],
     challenges: [
       {
-        challenge: 'Intermittent Rural Network Connectivity',
+        challenge: 'Preventing Unauthorized Delivery Confirmation',
         solution:
-          'Designed an optimistic offline mutation queue in Flutter using SQLite. When a farmer creates a crop listing without cellular coverage, the transaction is signed, stored locally, and automatically reconciled with the NestJS backend as soon as connectivity resumes.',
+          'Designed a single-use six-digit OTP delivery verification system. Upon order creation, a six-digit numeric code is generated, bcrypt-hashed and stored against the order record, and cached in Redis with a 7-day TTL. When the delivery agent arrives, the buyer shares the code, which is verified via bcrypt.compare before the order is marked delivered and wallet funds are unlocked.',
       },
       {
-        challenge: 'Preventing Delivery Disputes in Escrow Release',
+        challenge: 'Maintaining Ledger Integrity Across Order States',
         solution:
-          'Implemented a cryptographic two-party QR handshake. When a driver arrives at the delivery destination, the buyer scans the driver’s single-use verification token, triggering an atomic database transaction that releases the escrowed funds to both the farmer and the driver.',
+          'Implemented structured wallet and transaction service handlers in TypeORM that track credit, debit, commission, and withdrawal events with compensation logic and status validation to maintain accurate user balances.',
       },
     ],
     techStack: [
-      'Flutter',
-      'Dart',
       'NestJS',
       'TypeScript',
       'Redis',
+      'BullMQ',
       'PostgreSQL',
+      'TypeORM',
       'Paystack API',
       'OneSignal',
       'Docker',
@@ -131,7 +131,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     status: 'production',
     statusLabel: 'Live Production Web App',
     statusDescription:
-      'Deployed on custom production domain (cv-builder.dev-joseph.me) with Google Gemini AI integration, schema validation, and headless Puppeteer PDF compilation.',
+      'Deployed on custom production domain (cv-builder.dev-joseph.me) with Google Gemini AI structured JSON integration, Zod schema validation, and headless Puppeteer print-media PDF rendering.',
     year: '2024',
     role: 'Full-Stack Engineer & Architect',
     clientContext: 'Independent Digital Product',
@@ -139,73 +139,73 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     image: API_PROJECT_IMAGES['cv-builder'],
     liveUrl: 'https://cv-builder.dev-joseph.me',
     overview:
-      'A high-performance full-stack resume platform that transforms unstructured career notes, unformatted work history, and raw project bullet points into ATS-optimized, recruiter-friendly developer resumes with real-time AI critique and pixel-perfect PDF export.',
+      'A high-performance full-stack resume platform that transforms unstructured career notes and raw project history into clean, structured developer resumes with AI extraction, live split-screen preview, and server-side PDF export.',
     problem:
-      'Software engineers and job seekers frequently struggle to translate technical achievements into concise, quantifiable bullet points that pass automated Applicant Tracking Systems (ATS). Generic resume tools produce bloated formatting that corrupts parser extraction.',
+      'Software engineers and job seekers frequently struggle to translate unstructured work history into clean, standardized resume sections. Generic online resume builders often produce bloated layouts, inconsistent print styles, and corrupted formatting when converted to PDF.',
     objectives: [
-      'Instant transformation of unformatted text into structured, standardized resume sections.',
-      'Contextual AI refinement powered by Google Gemini enforcing quantifiable action-result bullet structures.',
-      'Pixel-perfect PDF generation that preserves exact typography, margins, and print layout across all devices.',
-      'Schema-validated client state preventing corrupted or incomplete career profiles.',
+      'Instant extraction and structuring of unstructured text or uploaded PDF resumes into clean schema-compliant sections.',
+      'Contextual AI structuring powered by Google Gemini outputting structured JSON without markdown formatting artifacts.',
+      'Pixel-perfect server-side PDF generation that preserves exact typography, millimeter margins, and A4 print layout across all devices.',
+      'Runtime Zod schema validation ensuring type safety and preventing corrupted profile states.',
     ],
     architecture: {
       summary:
-        'Next.js App Router application integrating React Hook Form and Zod on the client, Google Gemini AI structured inference on the server, and a headless Chromium Puppeteer worker for high-fidelity PDF rendering.',
+        'Next.js App Router application integrating React Hook Form and Zod on the client, Google Gemini AI structured inference on the server with model fallbacks, and a headless Chromium Puppeteer worker for high-fidelity A4 PDF rendering.',
       frontend: [
         'Next.js App Router with React 19 and strict TypeScript component architecture',
         'Custom Tailwind CSS print design system with precise millimeter margins and print-safe typography',
         'React Hook Form paired with Zod schemas for immediate input validation and autosave state',
       ],
       backend: [
-        'Next.js Server Actions and API route handlers orchestrating AI inference and PDF generation pipelines',
-        'Google Gemini 1.5 Flash API integration using structured JSON schema response constraints',
-        'Strict rate-limiting and input sanitization preventing injection attacks during prompt interpolation',
+        'Next.js route handlers orchestrating AI extraction (/api/parse-cv) and PDF generation (/api/generate-pdf)',
+        'Google Gemini API integration using @google/genai with candidate model fallbacks (gemini-3.8-flash, gemini-3.7-flash, gemini-flash-latest) and application/json MIME configuration',
+        'In-memory IP rate-limiting and input sanitization protecting AI inference endpoints from abuse',
       ],
       database: [
-        'Local storage persistence for anonymous guest sessions with encrypted export capabilities',
-        'Structured JSON export/import conforming to standardized resume schemas',
+        'Local storage persistence for guest sessions with import/export capabilities',
+        'Structured JSON export and import conforming to standardized TypeScript/Zod resume schemas',
       ],
       devops: [
-        'Automated Vercel deployment with serverless edge functions for low-latency AI streaming',
-        'Containerized Chromium instance configured for isolated, headless PDF rasterization',
+        'Production Ubuntu VPS deployment behind NGINX reverse proxy with SSL encryption',
+        'Headless Chromium Puppeteer environment configured with isolated sandbox flags for deterministic PDF rendering',
       ],
     },
     keyFeatures: [
       {
-        title: 'AI Critique & Bullet Rewriter',
+        title: 'Structured AI Extraction & Bullet Generation',
         description:
-          'Contextual rewriting engine powered by Google Gemini that analyzes passive bullet points and transforms them using the Google "Accomplished [X] as measured by [Y] by doing [Z]" impact framework.',
+          'Structured inference pipeline using Google Gemini that parses unstructured CV text, extracts personal details, skills, experience, and education, and formats bullet points into clean, action-oriented descriptions.',
         tag: 'Generative AI',
       },
       {
-        title: 'Split-Screen Interactive Live Preview',
+        title: 'Dual-Pane Interactive Live Preview',
         description:
-          'Dual-pane workspace allowing developers to adjust career information on the left while observing real-time typesetting, margin calculations, and section flow updates on the right.',
+          'Real-time split-screen interface allowing developers to edit profile sections on the left while observing live typography, section reordering, and millimeter spacing updates on the right.',
         tag: 'Client Architecture',
       },
       {
         title: 'Headless Puppeteer PDF Compilation',
         description:
-          'Server-side headless browser engine that renders the resume DOM at exact print resolution and streams back a high-dpi, vector-searchable PDF document guaranteed to parse accurately in Workday, Greenhouse, and Lever.',
+          'Server-side Puppeteer engine that renders the resume HTML DOM using print-media emulation (A4 format) and outputs a high-resolution, vector-searchable, ATS-friendly PDF with preserved selectable text layers.',
         tag: 'Rendering Engine',
       },
       {
-        title: 'Existing CV Upload & Parser',
+        title: 'Document Ingestion & Text Parsing',
         description:
-          'Intelligent upload pipeline allowing candidates to import existing text or PDF resumes, automatically segmenting work experience, education, skills, and certifications into editable components.',
+          'Ingestion pipeline using pdf-parse that extracts raw text from existing PDF resumes, handling polyfills in serverless Node environments and passing clean text to the Gemini structuring engine.',
         tag: 'Document Ingestion',
       },
     ],
     challenges: [
       {
-        challenge: 'Inconsistent PDF Output Across Devices',
+        challenge: 'Inconsistent PDF Output Across Devices & Browsers',
         solution:
-          'Standard browser window.print() introduces unpredictable page breaks and vendor-specific font rasterization. Solved by replacing client-side printing with a server-side Puppeteer headless Chromium pipeline that evaluates print media queries with exact page-break-inside: avoid CSS rules.',
+          'Standard browser window.print() introduces unpredictable margins, inconsistent font rasterization, and arbitrary page breaks. Solved by implementing a server-side Puppeteer headless Chromium pipeline that emulates print media with exact CSS page-break-inside: avoid rules and A4 millimeter dimensions.',
       },
       {
         challenge: 'LLM Response Hallucination & Format Breaking',
         solution:
-          'Free-form AI text generations frequently broke JSON structures. Resolved by configuring Google Gemini with strict responseSchema parameters and validating the raw output through Zod before committing to the application state.',
+          'Free-form AI text generations frequently returned invalid JSON or markdown codeblocks. Resolved by configuring Google Gemini with responseMimeType: "application/json", candidate fallback models, markdown cleanup filters, and strict runtime validation via cvSchema.parse(parsedData) using Zod.',
       },
     ],
     techStack: [
@@ -213,7 +213,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'React',
       'TypeScript',
       'Tailwind CSS',
-      'Google Gemini AI',
+      '@google/genai',
       'Puppeteer',
       'Zod',
       'React Hook Form',
@@ -231,7 +231,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     status: 'prototype',
     statusLabel: 'Commercial Client Prototype',
     statusDescription:
-      'Interactive client demonstration prototype built for a Lapaz, Accra retail business. Demonstrates fluid catalog discovery, responsive shopping bag state, and admin inventory view.',
+      'Interactive client demonstration prototype built for a Lapaz, Accra retail business. Demonstrates catalog discovery, client-side Zustand shopping bag state, and simulated admin inventory management.',
     year: '2024',
     role: 'Frontend Architect & UI Designer',
     clientContext: 'Zee Essentials Retail (Lapaz Showroom, Accra, Ghana)',
@@ -239,30 +239,30 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     image: API_PROJECT_IMAGES['zee-essentials'],
     liveUrl: 'https://zee-essentials-prototype.vercel.app/',
     overview:
-      'A bespoke e-commerce digital storefront prototype crafted for Zee Essentials, a retail enterprise based in Lapaz, Accra specializing in content creation equipment (studio video lighting, wireless microphones, heavy-duty tripods), salon furniture, and rechargeable electronics.',
+      'A bespoke e-commerce digital storefront prototype crafted for Zee Essentials, a retail enterprise in Lapaz, Accra specializing in content creation equipment (studio lighting, wireless microphones, heavy-duty tripods), salon furniture, and rechargeable electronics.',
     problem:
-      'Independent retail shops across Accra operate primarily through Instagram DMs and WhatsApp chats. This leads to missed customer inquiries during peak hours, repetitive price/stock questions, manual order tracking errors, and high drop-off during payment coordination.',
+      'Independent retail shops across Accra frequently operate primarily through Instagram DMs and WhatsApp chats. This manual coordination leads to missed customer inquiries during peak hours, repetitive price/stock inquiries, manual calculation errors, and high drop-off.',
     objectives: [
-      'Provide a polished, premium digital storefront capturing the high-grade aesthetic of content creator gear.',
+      'Provide an editorial, brand-forward digital storefront capturing the high-grade aesthetic of creator gear.',
       'Incorporate authentic Ghanaian commercial context: Lapaz showroom pickup, delivery across Accra, and pricing in Ghana Cedis (GH₵).',
-      'Implement a fluid interactive shopping bag drawer with instant item calculation on mobile devices.',
-      'Build a prototype admin management view for store supervisors to inspect inventory and order logs.',
+      'Implement a fluid interactive shopping bag drawer with instant item calculation and localStorage persistence.',
+      'Build a prototype admin management dashboard for store supervisors to preview catalog and order controls.',
     ],
     architecture: {
       summary:
-        'Next.js App Router client architecture featuring optimized responsive imagery, Framer Motion drawer interactions, client-side cart persistence, and lightweight static page delivery.',
+        'Next.js App Router client architecture featuring responsive photography, Framer Motion drawer interactions, client-side Zustand shopping bag persistence, and interactive administrative demonstration views.',
       frontend: [
-        'Next.js App Router delivering high Core Web Vitals performance with instantaneous page transitions',
-        'Framer Motion physics driving the slide-out bag drawer, product card hover zooms, and category carousels',
-        'Custom warm canvas color tokens (#FAFAF8) paired with high-contrast typography and subtle creator accents',
+        'Next.js App Router delivering high Core Web Vitals performance with smooth page transitions',
+        'Framer Motion driving slide-out bag drawer animations, product card hover zooms, and category carousels',
+        'Warm canvas theme tokens paired with high-contrast typography and subtle creator accents',
       ],
       backend: [
-        'Client-side state architecture managing item quantities, bag subtotals, and category filtering',
-        'Demonstration admin routes (/admin) providing high-fidelity previews of business analytics and order statuses',
+        'Client-side Zustand state architecture managing item quantities, bag subtotals, and category filtering without a live transactional backend',
+        'Simulated admin route (/admin) demonstrating catalog toggles, promo code configuration, and mock customer order tables',
       ],
       database: [
-        'Structured catalog JSON architecture organized for seamless future migration to Supabase PostgreSQL',
-        'Client local storage persistence preserving shopping bag contents across browser refreshes',
+        'Curated 21-product catalog structure organized across 7 categories in local data schemas',
+        'Browser localStorage persistence (zee-essentials-cart-v3) preserving bag state and promo discounts across sessions',
       ],
       devops: [
         'Vercel edge deployment with automated preview branches and image optimization pipelines',
@@ -271,27 +271,27 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     },
     keyFeatures: [
       {
-        title: 'Categorized Creator Equipment Catalog',
+        title: 'Curated 21-Product Creator Catalog',
         description:
-          'Structured product discovery across Studio Video Lighting, Wireless Microphones, Rechargeable Living, Salon & Studio Furniture, Beauty Supplies, and Smart Home Gadgets with high-resolution photography.',
+          'Structured product discovery across Studio Video Lighting, Wireless Microphones, Rechargeable Living, Salon & Studio Furniture, Beauty Supplies, and Displays with high-resolution photography.',
         tag: 'Catalog Architecture',
       },
       {
-        title: 'Interactive Slide-Out Shopping Bag Drawer',
+        title: 'Zustand Slide-Out Shopping Bag Drawer',
         description:
-          'Framer Motion slide-over drawer enabling shoppers to add items, adjust quantities, inspect subtotal calculations in GH₵, and proceed to checkout without disruptive page reloads.',
-        tag: 'Micro-Interactions',
+          'Interactive slide-over drawer enabling shoppers to add items, adjust quantities, calculate live subtotals in GH₵, and apply promotional discounts with instant browser persistence.',
+        tag: 'State & Micro-Interactions',
       },
       {
         title: 'Localized Ghanaian Retail Touchpoints',
         description:
-          'Designed around real Ghanaian shopping habits: Free Lapaz showroom pickup indicators, Accra doorstep delivery guarantees, Mobile Money payment badges, and direct telephone contact (054 265 5690).',
+          'Designed around real Ghanaian shopping habits: Free Lapaz showroom pickup indicators, Accra doorstep delivery guarantees, Mobile Money badges, and direct telephone contact (054 265 5690).',
         tag: 'Localization',
       },
       {
-        title: 'Store Manager Admin Demo Hub',
+        title: 'Store Manager Simulated Admin Hub',
         description:
-          'Dedicated /admin demonstration route displaying key retail metrics: daily order volume, gross revenue counters, low-stock warnings, and recent customer delivery statuses.',
+          'Dedicated /admin demonstration route displaying simulated retail metrics: mock order volume, gross revenue counters, low-stock warnings, and recent customer delivery records.',
         tag: 'Demonstration Suite',
       },
     ],
@@ -302,9 +302,9 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
           'Content creators predominantly browse on smartphones over mobile cellular networks. Handcrafted lightweight CSS transforms and Framer Motion spring physics with layoutId, avoiding heavy layout re-renders during bag opening.',
       },
       {
-        challenge: 'Maintaining Clear Commercial Transparency',
+        challenge: 'Transparent Prototype Positioning',
         solution:
-          'Distinguished client presentation prototype features from transactional production backends. Highlighted interactive demo state, allowing the client to test user engagement before investing in merchant banking API integrations.',
+          'Clearly exposed demonstration notices and simulated data badges. Distinguished frontend UX excellence and client-side state handling from live transactional payment processing and production inventory databases.',
       },
     ],
     techStack: [
@@ -312,6 +312,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'React',
       'TypeScript',
       'Tailwind CSS',
+      'Zustand',
       'Framer Motion',
       'Lucide React',
       'Vercel',
@@ -329,7 +330,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     status: 'prototype',
     statusLabel: 'Commercial Client Prototype',
     statusDescription:
-      'High-contrast luxury footwear storefront prototype designed for a Kumasi Adum retail brand. Demonstrates category filtering, interactive sneaker drops, and demo controls.',
+      'High-contrast luxury footwear storefront prototype designed for a Kumasi Adum retail brand. Demonstrates category filtering, instant modal search, shopping bag interactions, and WhatsApp direct ordering.',
     year: '2024',
     role: 'Frontend Engineer & Creative Director',
     clientContext: 'Adepa Wc Mpaboa (Adum, Kumasi, Ghana)',
@@ -337,57 +338,57 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     image: API_PROJECT_IMAGES['adepa-wc-mpaboa'],
     liveUrl: 'https://adepa-wc-mpaboa.vercel.app/',
     overview:
-      'A modern digital storefront prototype built for Adepa Wc Mpaboa, a footwear brand headquartered in Adum, Kumasi, Ghana. The platform curates premium streetwear sneakers, designer slides, rugged combat boots, and luxury lifestyle accessories with high visual impact.',
+      'A modern digital storefront prototype built for Adepa Wc Mpaboa, a footwear brand based in Adum, Kumasi, Ghana. The platform curates premium streetwear sneakers, designer slides, rugged combat boots, and luxury lifestyle accessories with high visual impact and WhatsApp order dispatch.',
     problem:
       'Independent footwear retailers in Ghana struggle with generic e-commerce templates that fail to convey the authenticity and editorial presence of limited-release sneakers. Sales channels rely on phone calls and WhatsApp chats, causing inventory miscounts and sizing confusion.',
     objectives: [
       'Establish an editorial, brand-forward digital storefront reflecting contemporary streetwear aesthetics.',
       'Provide frictionless product discovery across footwear categories: Sneakers, Slippers & Slides, Boots, and Watches.',
-      'Communicate localized delivery trust: Kumasi Adum showroom verification, nationwide parcel dispatch, and quality inspection guarantees.',
-      'Incorporate interactive demonstration controls allowing the merchant to preview storefront announcements and stock levels.',
+      'Implement instant modal search and responsive bag interactions with size and variant selection.',
+      'Incorporate interactive demonstration controls and direct WhatsApp dispatch to bridge prototype checkout with merchant operations.',
     ],
     architecture: {
       summary:
-        'Next.js App Router application featuring an editorial high-contrast monochrome design system, fluid category filtering, interactive demo controllers, and responsive image showcases.',
+        'Next.js App Router application featuring an editorial high-contrast monochrome design system, fluid category filtering, instant search, client-side Zustand state, and direct WhatsApp order generation.',
       frontend: [
         'Next.js App Router with custom responsive image wrappers ensuring crisp product rendering across Retina displays',
-        'Space Grotesk and editorial sans typography creating an unmistakable street luxury identity',
-        'Motion gesture handling powering product carousel navigation and category filtering transitions',
+        'Space Grotesk and editorial typography creating an unmistakable street luxury identity',
+        'Instant modal search component (SearchModal.tsx) enabling real-time product filtering by name and category',
       ],
       backend: [
-        'Client-side state management orchestrating shopping bag items, order tracking previews, and interactive demo controls',
-        'Admin Management Hub (/admin) showcasing mock order pipelines and product management controls',
+        'Client-side state management using Zustand (useCartStore, useOrderStore, useConfigStore) orchestrating bag items, order logs, and demo controls',
+        'Simulated admin route (/admin) showcasing mock order pipelines and product management controls without a production database',
       ],
       database: [
-        'Normalized client catalog schema modeling product variants (EU sizing 39–45), colorways, and price points in GH₵',
+        'Normalized client catalog schema modeling product variants (EU sizing 40–46), colorways, and price points in GH₵',
       ],
       devops: [
-        'Vercel continuous deployment with sub-second global edge CDN caching for static assets',
+        'Vercel continuous deployment with global edge CDN caching for static assets',
       ],
     },
     keyFeatures: [
       {
-        title: 'High-Impact 3D Hero Drop Showcase',
+        title: 'Editorial 3D Hero Drop Showcase',
         description:
           'Dynamic hero section with bold typography ("STEP INTO GREATNESS"), floating sneaker perspective, pricing badge (GH₵ 370.00), and rapid "Shop Now" call to action.',
         tag: 'Editorial UI',
       },
       {
-        title: 'Category-Specific Footwear Filtering',
+        title: 'Instant Search & Footwear Filtering',
         description:
-          'One-click filtering between Streetwear Sneakers, Luxury Slides, Rugged Boots, and Lifestyle Accessories with visual count badges (e.g. "9 demonstration styles available").',
+          'Interactive search modal paired with one-click category filtering across Streetwear Sneakers, Luxury Slides, Rugged Boots, and Lifestyle Accessories with visual count badges.',
         tag: 'Product Discovery',
       },
       {
-        title: 'Localized Kumasi Commercial Touchpoints',
+        title: 'WhatsApp Direct Ordering Bridge',
         description:
-          'Tailored to Ghanaian retail: "Verified in Adum, Kumasi", direct telephone ordering (0551189090), 100% Quality Inspected guarantee, and Nationwide Express Parcel Delivery.',
-        tag: 'Localization',
+          'Automated WhatsApp URL generator (whatsapp.ts) that formats the customer order details, item count, selected sizes, and delivery location into a structured message sent directly to the merchant phone number.',
+        tag: 'Commerce Integration',
       },
       {
-        title: 'Embedded Interactive Demo Controls',
+        title: 'Interactive Demo Banner Controls',
         description:
-          'Floating interactive controller enabling prospective clients and evaluators to preview banner toggles, simulated cart additions, and inventory status without editing source code.',
+          'Floating interactive controller enabling evaluators to toggle delivery fee calculations, switch announcement banners, and reset demo order state without modifying code.',
         tag: 'Demonstration Suite',
       },
     ],
@@ -398,9 +399,9 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
           'High-resolution footwear mockups can easily cause page weight bloat. Implemented WebP compression and responsive srcset image wrappers that serve correctly sized image assets depending on viewport density.',
       },
       {
-        challenge: 'Honest Prototype Positioning for Retailers',
+        challenge: 'Simulating Merchant Order Workflows Honestly',
         solution:
-          'Clearly exposed demonstration controls and prototype notices. Highlighted frontend UX excellence while clearly outlining the roadmap for live payment gateway and inventory database integration.',
+          'Prominently labeled the checkout with a prototype demonstration notice. Simulated Mobile Money USSD prompt flows while providing a real WhatsApp dispatch option so the merchant could immediately accept orders.',
       },
     ],
     techStack: [
@@ -408,13 +409,14 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       'React',
       'TypeScript',
       'Tailwind CSS',
+      'Zustand',
       'Framer Motion',
       'Lucide React',
       'Vercel',
     ],
     nextSlug: 'agromarket',
     nextTitle: 'AgroMarket',
-    nextCategory: 'Full-Stack & Mobile Ecosystem',
+    nextCategory: 'Full-Stack Ecosystem & Backend Architecture',
   },
 
   'the-vault': {

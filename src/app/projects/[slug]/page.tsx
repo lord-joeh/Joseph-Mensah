@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cache } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Navigation } from '@/components/layout/Navigation';
@@ -13,11 +13,31 @@ import { TechnologyStack } from '@/components/case-study/TechnologyStack';
 import { CaseStudyNavigation } from '@/components/case-study/CaseStudyNavigation';
 import { getCaseStudy } from '@/lib/case-studies/data';
 import { ALL_CANONICAL_SLUGS } from '@/lib/projects/slugs';
-import { getProjects, getAboutInfo } from '@/lib/api';
+import { getProjects, getAboutInfo, type Project, type AboutInfo } from '@/lib/api';
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
+
+/**
+ * Deduplicated shared data fetcher across generateMetadata and CaseStudyPage.
+ */
+const getInitialData = cache(async () => {
+  let apiProjects: Project[] = [];
+  let aboutInfo: AboutInfo | null = null;
+  try {
+    const [pRes, aRes] = await Promise.allSettled([getProjects(), getAboutInfo()]);
+    if (pRes.status === 'fulfilled' && pRes.value.success) {
+      apiProjects = pRes.value.data;
+    }
+    if (aRes.status === 'fulfilled' && aRes.value.success) {
+      aboutInfo = aRes.value.data;
+    }
+  } catch {
+    // Graceful fallback to static data
+  }
+  return { apiProjects, aboutInfo };
+});
 
 export function generateStaticParams() {
   return ALL_CANONICAL_SLUGS.map((slug) => ({ slug }));
@@ -27,7 +47,8 @@ export async function generateMetadata({
   params,
 }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = getCaseStudy(slug);
+  const { apiProjects } = await getInitialData();
+  const caseStudy = getCaseStudy(slug, apiProjects);
 
   if (!caseStudy) {
     return {
@@ -66,22 +87,7 @@ export async function generateMetadata({
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const { slug } = await params;
-
-  // Fetch live API projects to enrich image/link data if available
-  let apiProjects: any[] = [];
-  let aboutInfo: any = null;
-  try {
-    const [pRes, aRes] = await Promise.allSettled([getProjects(), getAboutInfo()]);
-    if (pRes.status === 'fulfilled' && pRes.value.success) {
-      apiProjects = pRes.value.data;
-    }
-    if (aRes.status === 'fulfilled' && aRes.value.success) {
-      aboutInfo = aRes.value.data;
-    }
-  } catch {
-    // Graceful fallback to static data
-  }
-
+  const { apiProjects, aboutInfo } = await getInitialData();
   const caseStudy = getCaseStudy(slug, apiProjects);
 
   if (!caseStudy) {

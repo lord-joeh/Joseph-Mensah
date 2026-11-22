@@ -21,7 +21,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
 
   const getProjectCategory = (title: string): string => {
     const t = title.toLowerCase();
-    if (t.includes('agro')) return 'Full-Stack & Mobile Ecosystem';
+    if (t.includes('agro')) return 'Full-Stack Ecosystem & Architecture';
     if (t.includes('cv')) return 'Full-Stack AI Platform';
     if (t.includes('zee')) return 'Commercial E-Commerce Client Prototype';
     if (t.includes('adepa')) return 'Commercial Retail Storefront Prototype';
@@ -48,7 +48,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
   // Enriched tags & fallbacks from verified data
   const agroTags = agroProject?.tags
     ? agroProject.tags.split(',').map((t) => t.trim())
-    : ['Flutter', 'NestJS', 'Redis', 'PostgreSQL', 'Paystack', 'One Signal'];
+    : ['NestJS', 'TypeScript', 'Redis', 'BullMQ', 'PostgreSQL', 'Paystack', 'OneSignal'];
 
   const cvTags = cvProject?.tags
     ? cvProject.tags.split(',').map((t) => t.trim())
@@ -90,11 +90,11 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
 
           <ProjectCard
             title={agroProject?.title || 'AgroMarket'}
-            category="Full-Stack & Mobile Ecosystem"
+            category="Full-Stack Ecosystem & Architecture"
             year="2025 – Present"
             description={
               agroProject?.description ||
-              'A three-sided agricultural and logistics marketplace connecting rural Ghanaian farmers directly with institutional commodity buyers and haulers. Engineered with real-time price discovery, automated Paystack escrow settlement, and SMS dispatch.'
+              'A multi-sided agricultural and logistics marketplace platform connecting rural Ghanaian farmers with commercial buyers and haulers. Engineered with platform-managed Paystack wallet settlements, single-use OTP delivery verification, and SMS alerts.'
             }
             imageUrl={agroProject?.image_url || API_PROJECT_IMAGES.agromarket}
             tags={agroTags}

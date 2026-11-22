@@ -258,7 +258,7 @@ export default function DesignSystemPreviewPage() {
                 year="2026"
                 description="Full-stack, three-sided agricultural and logistics marketplace platform connecting farmers, commercial buyers, and verified logistics providers with high-performance caching and microservices."
                 imageUrl={API_PROJECT_IMAGES.agromarket}
-                tags={['Flutter', 'NestJS', 'Redis', 'PostgreSQL', 'Paystack']}
+                tags={['NestJS', 'TypeScript', 'Redis', 'PostgreSQL', 'Paystack']}
                 liveUrl="https://agromarket.dev-joseph.me"
                 githubUrl="https://github.com/lord-joeh"
               />
