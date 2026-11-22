@@ -51,11 +51,12 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       frontend: [
         'Multi-client API architecture engineered to support responsive web dashboards and mobile clients',
         'Strict DTO validation interfaces enforcing type consistency across buyer, farmer, and agent clients',
-        'Stateful order progression interfaces reflecting real-time delivery lifecycle transitions',
+        'Stateful order progression interfaces reflecting real-time delivery lifecycle transitions broadcast over Socket.IO WebSockets',
       ],
       backend: [
         'NestJS modular backend with strict TypeScript DTOs, class-validator runtime checks, and TypeORM entities',
         'JWT-based role-based access control (RBAC) isolating Farmer, Buyer, Agent, and Admin routes',
+        'Socket.IO WebSocket gateway (notifications.gateway.ts) broadcasting real-time order status updates to client user rooms',
         'Event-driven transaction processing utilizing BullMQ queues for asynchronous task execution',
       ],
       database: [
@@ -90,7 +91,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       {
         title: 'High-Performance Redis In-Memory Layer',
         description:
-          'Redis caching layer providing sub-second HTTP response caching, JWT token blacklisting for secure logouts, BullMQ background job queues, and temporary OTP delivery-code storage with a 7-day TTL.',
+          'Redis caching layer providing in-memory HTTP response caching, JWT token blacklisting for secure logouts, BullMQ background job queues, and temporary OTP delivery-code storage with a 7-day TTL.',
         tag: 'Caching & Performance',
       },
     ],
@@ -98,7 +99,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
       {
         challenge: 'Preventing Unauthorized Delivery Confirmation',
         solution:
-          'Designed a single-use six-digit OTP delivery verification system. Upon order creation, a six-digit numeric code is generated, bcrypt-hashed and stored against the order record, and cached in Redis with a 7-day TTL. When the delivery agent arrives, the buyer shares the code, which is verified via bcrypt.compare before the order is marked delivered and wallet funds are unlocked.',
+          'Designed a single-use six-digit OTP delivery verification system. Upon order creation, a six-digit numeric code is generated, bcrypt-hashed and stored against the order record, and cached in Redis with a 7-day TTL. When the delivery agent arrives, the buyer shares the code, which is verified via bcrypt.compare before the order is marked delivered and wallet funds are unlocked. Upon successful delivery confirmation, the OTP key is immediately deleted from Redis to prevent replay.',
       },
       {
         challenge: 'Maintaining Ledger Integrity Across Order States',
