@@ -35,7 +35,7 @@ export function ContactSection() {
     try {
       const res = await submitContactForm(values);
       if (res.success) {
-        toast.success('Message sent successfully! I will reply shortly.');
+        toast.success('Inquiry received! I will review your message and reply shortly.');
         setSubmitSuccess(true);
         form.reset();
       } else {
@@ -118,11 +118,11 @@ export function ContactSection() {
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-2xl font-display font-bold text-content-primary">
-                      Message Dispatched
+                      Inquiry Received
                     </h3>
                     <p className="text-sm text-content-secondary max-w-sm mx-auto leading-relaxed">
-                      Thank you for reaching out! Your message was delivered and an automated
-                      confirmation was generated. I will respond to your inquiry shortly.
+                      Thank you for reaching out! Your message has been safely recorded in my
+                      inbox. I will review your inquiry and get back to you shortly.
                     </p>
                   </div>
                   <Button
