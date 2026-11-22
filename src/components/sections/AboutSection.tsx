@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { ArrowUpRight, Download, MapPin, Briefcase, GraduationCap } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -34,11 +35,17 @@ export function AboutSection({ about }: AboutSectionProps) {
           <div className="lg:col-span-5 space-y-6">
             <div className="relative group">
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-surface border border-surface-border p-2">
-                <img
-                  src={profileImg}
-                  alt="Joseph Mensah"
-                  className="w-full h-full object-cover rounded-xl grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-cinematic"
-                />
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                  <Image
+                    src={profileImg}
+                    alt="Joseph Mensah"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    loading="lazy"
+                    quality={80}
+                    className="object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-cinematic"
+                  />
+                </div>
               </div>
             </div>
 

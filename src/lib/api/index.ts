@@ -85,7 +85,7 @@ export interface ReorderUpdate {
  */
 async function apiFetch<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit & { next?: { revalidate?: number | false; tags?: string[] } } = {}
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   
@@ -94,9 +94,14 @@ async function apiFetch<T>(
     headers.set('Accept', 'application/json');
   }
 
+  // 5-second timeout to prevent serverless execution stalls
+  const signal = options.signal || AbortSignal.timeout(5000);
+
   const response = await fetch(url, {
     ...options,
+    signal,
     headers,
+    next: options.next || { revalidate: 60 },
   });
 
   if (!response.ok) {
