@@ -11,35 +11,38 @@ export default {
     container: {
       center: true,
       padding: {
-        DEFAULT: "1.5rem",
+        DEFAULT: "1.25rem",
         sm: "2rem",
         lg: "3rem",
         xl: "4rem",
       },
       screens: {
-        "2xl": "1440px",
+        "2xl": "1400px",
       },
     },
     extend: {
       colors: {
-        // Master Palette
+        // Master Cinematic Palette
         canvas: "#101113",
         surface: {
           DEFAULT: "#17181A",
           elevated: "#1E2023",
           subtle: "#141517",
           border: "#292A2C",
+          hover: "#222428",
         },
         lime: {
           DEFAULT: "#D5FF62",
           accent: "#D5FF62",
+          dim: "#B2DE46",
           glow: "rgba(213, 255, 98, 0.18)",
-          dim: "#A3D432",
+          subtle: "rgba(213, 255, 98, 0.08)",
         },
         content: {
           primary: "#F5F5F0",
           secondary: "#929292",
           muted: "#6B6C6E",
+          inverted: "#101113",
         },
 
         // Shadcn UI Semantic Mapping
@@ -78,26 +81,56 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
         display: ["var(--font-space-grotesk)", "var(--font-inter)", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+      },
+      fontSize: {
+        // Fluid responsive typography
+        "display-2xl": "clamp(2.75rem, 7vw, 5.75rem)",
+        "display-xl": "clamp(2.25rem, 5vw, 4.25rem)",
+        "display-lg": "clamp(1.75rem, 3.5vw, 3rem)",
+        "display-md": "clamp(1.35rem, 2.2vw, 2rem)",
+        "display-sm": "clamp(1.15rem, 1.8vw, 1.5rem)",
+      },
+      letterSpacing: {
+        tightest: "-0.04em",
+        tighter: "-0.025em",
+        tight: "-0.015em",
+        normal: "0",
+        wide: "0.025em",
+        wider: "0.06em",
+        widest: "0.12em",
+      },
+      lineHeight: {
+        display: "1.05",
+        heading: "1.18",
+        body: "1.65",
       },
       borderRadius: {
+        "2xl": "1.25rem",
+        xl: "1rem",
         lg: "0.75rem",
         md: "0.5rem",
         sm: "0.25rem",
       },
-      letterSpacing: {
-        tightest: "-0.04em",
-        tighter: "-0.02em",
-        tight: "-0.01em",
-        normal: "0",
-        wide: "0.02em",
-        wider: "0.05em",
-        widest: "0.1em",
+      boxShadow: {
+        glow: "0 0 35px rgba(213, 255, 98, 0.18)",
+        "glow-lg": "0 0 60px rgba(213, 255, 98, 0.22)",
+        "surface-card": "0 10px 40px -10px rgba(0, 0, 0, 0.7)",
       },
-      animation: {
-        "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "spin-slow": "spin 12s linear infinite",
+      zIndex: {
+        negative: "-1",
+        base: "0",
+        elevated: "10",
+        sticky: "50",
+        overlay: "60",
+        modal: "70",
+        toast: "100",
+      },
+      transitionTimingFunction: {
+        cinematic: "cubic-bezier(0.16, 1, 0.3, 1)",
+        smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
     },
   },
