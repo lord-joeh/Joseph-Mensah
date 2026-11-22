@@ -1,6 +1,6 @@
 import React, { cache } from 'react';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
 import { CaseStudyHero } from '@/components/case-study/CaseStudyHero';
@@ -92,6 +92,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   if (!caseStudy) {
     notFound();
+  }
+
+  // If accessed via an alias slug (e.g. /projects/adepa), permanently redirect to canonical route
+  if (caseStudy.slug !== slug) {
+    permanentRedirect(`/projects/${caseStudy.slug}`);
   }
 
   return (

@@ -158,6 +158,8 @@ export function HeroSection({ about }: HeroSectionProps) {
                   <img
                     src={profileImg}
                     alt="Joseph Mensah — Software Engineer"
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-cinematic"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-canvas/90 via-canvas/20 to-transparent pointer-events-none" />
@@ -172,9 +174,6 @@ export function HeroSection({ about }: HeroSectionProps) {
                         <p className="text-[11px] font-mono text-content-secondary">
                           Software Engineer
                         </p>
-                      </div>
-                      <div className="w-7 h-7 rounded-full bg-lime/15 border border-lime/40 text-lime flex items-center justify-center">
-                        <Sparkles className="w-3.5 h-3.5" />
                       </div>
                     </div>
                   </div>
@@ -198,7 +197,7 @@ export function HeroSection({ about }: HeroSectionProps) {
         <div className="hidden sm:flex items-center gap-4 text-[11px]">
           <span>Full-Stack</span>
           <span>·</span>
-          <span>Mobile (Flutter)</span>
+          <span>Mobile (Flutter, React Native)</span>
           <span>·</span>
           <span>NestJS</span>
           <span>·</span>

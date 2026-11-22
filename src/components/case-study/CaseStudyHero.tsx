@@ -115,6 +115,8 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
           <img
             src={caseStudy.image}
             alt={caseStudy.title}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-canvas/40 via-transparent to-transparent pointer-events-none" />

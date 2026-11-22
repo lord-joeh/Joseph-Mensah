@@ -1,17 +1,38 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { ArrowUp } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { SelectedWorkSection } from '@/components/sections/SelectedWorkSection';
-import { CapabilitiesSection } from '@/components/sections/CapabilitiesSection';
-import { PhilosophySection } from '@/components/sections/PhilosophySection';
-import { AboutSection } from '@/components/sections/AboutSection';
-import { ToolkitSection } from '@/components/sections/ToolkitSection';
-import { CertificationsSection } from '@/components/sections/CertificationsSection';
-import { ContactSection } from '@/components/sections/ContactSection';
+
+// Below-the-fold sections dynamically imported to reduce initial JavaScript payload & main-thread blocking
+const CapabilitiesSection = dynamic(
+  () => import('@/components/sections/CapabilitiesSection').then((m) => m.CapabilitiesSection),
+  { ssr: true }
+);
+const PhilosophySection = dynamic(
+  () => import('@/components/sections/PhilosophySection').then((m) => m.PhilosophySection),
+  { ssr: true }
+);
+const AboutSection = dynamic(
+  () => import('@/components/sections/AboutSection').then((m) => m.AboutSection),
+  { ssr: true }
+);
+const ToolkitSection = dynamic(
+  () => import('@/components/sections/ToolkitSection').then((m) => m.ToolkitSection),
+  { ssr: true }
+);
+const CertificationsSection = dynamic(
+  () => import('@/components/sections/CertificationsSection').then((m) => m.CertificationsSection),
+  { ssr: true }
+);
+const ContactSection = dynamic(
+  () => import('@/components/sections/ContactSection').then((m) => m.ContactSection),
+  { ssr: true }
+);
 import {
   getAboutInfo,
   getProjects,
