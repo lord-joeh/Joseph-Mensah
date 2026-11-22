@@ -17,9 +17,17 @@ const nextConfig = {
       },
     ],
   },
-  // Preserve SPA redirect compatibility for legacy routes if needed
-  async redirects() {
-    return [];
+  async rewrites() {
+    const targetApi =
+      process.env.BACKEND_API_INTERNAL_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      'https://api.dev-joseph.me/api';
+    return [
+      {
+        source: '/api-backend/:path*',
+        destination: `${targetApi}/:path*`,
+      },
+    ];
   },
 };
 

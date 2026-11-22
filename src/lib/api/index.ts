@@ -3,8 +3,15 @@
  * Connects to the NestJS backend preserving exact DTOs and HTTP contracts.
  */
 
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'https://api.dev-joseph.me/api';
+const isBrowser = typeof window !== 'undefined';
+const isLocalhost =
+  isBrowser &&
+  (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1');
+
+export const API_BASE_URL = isLocalhost
+  ? '/api-backend'
+  : (process.env.NEXT_PUBLIC_API_URL || 'https://api.dev-joseph.me/api');
 
 export interface ApiResponse<T> {
   success: boolean;
