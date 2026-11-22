@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight, MapPin, Sparkles } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MagneticButton } from '@/components/motion/MagneticButton';
 import { Eyebrow } from '@/components/ui/Eyebrow';

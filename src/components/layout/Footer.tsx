@@ -85,7 +85,7 @@ export function Footer({
               )}
             </div>
             <div className="pt-2 text-content-muted text-[11px]">
-              Location: Accra, Ghana (GMT+0)
+              Location: Accra, Ghana
             </div>
           </div>
         </div>
