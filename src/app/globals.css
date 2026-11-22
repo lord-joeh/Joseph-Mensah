@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: #101113;
+    --surface: #17181A;
+    --surface-elevated: #1E2023;
+    --surface-subtle: #141517;
+    --border: #292A2C;
+    --input: #292A2C;
+
+    --content-primary: #F5F5F0;
+    --content-secondary: #929292;
+    --content-muted: #6B6C6E;
+
+    --lime-accent: #D5FF62;
+    --lime-dim: #B2DE46;
+    --lime-glow: rgba(213, 255, 98, 0.18);
+    --lime-subtle: rgba(213, 255, 98, 0.08);
+
+    /* Shadcn compatibility tokens */
+    --background: 220 7% 7%;
+    --foreground: 60 14% 95%;
+    --card: 220 6% 10%;
+    --card-foreground: 60 14% 95%;
+    --popover: 220 6% 10%;
+    --popover-foreground: 60 14% 95%;
+    --primary: 76 100% 69%;
+    --primary-foreground: 220 7% 7%;
+    --secondary: 220 8% 13%;
+    --secondary-foreground: 60 14% 95%;
+    --muted: 220 6% 12%;
+    --muted-foreground: 0 0% 57%;
+    --accent: 76 100% 69%;
+    --accent-foreground: 220 7% 7%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 76 100% 69%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: #101113;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background-color: #101113;
+    color: #F5F5F0;
+    font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(213, 255, 98, 0.28);
+    color: #D5FF62;
+  }
+
+  /* Global keyboard focus outlines */
+  :focus-visible {
+    outline: 2px solid #D5FF62;
+    outline-offset: 3px;
+  }
+}
+
+/* Subtle editorial film grain texture for cinematic depth */
+.film-grain {
+  background-image: radial-gradient(rgba(245, 245, 240, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Custom editorial scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #101113;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #292A2C;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3D3F43;
+}
+
+/* Utility to hide scrollbars while preserving scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reduced-motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
