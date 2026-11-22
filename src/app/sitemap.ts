@@ -1,8 +1,16 @@
 import type { MetadataRoute } from 'next';
+import { ALL_CANONICAL_SLUGS } from '@/lib/projects/slugs';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://mensah.dev-joseph.me';
   const lastModified = new Date();
+
+  const projectEntries: MetadataRoute.Sitemap = ALL_CANONICAL_SLUGS.map((slug) => ({
+    url: `${baseUrl}/projects/${slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
 
   return [
     {
@@ -11,29 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
-    {
-      url: `${baseUrl}/projects/agromarket`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects/multi-wallet`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects/zee-essentials`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/projects/adepa`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    ...projectEntries,
   ];
 }
