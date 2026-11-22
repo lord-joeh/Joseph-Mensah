@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import Link from 'next/link';
+import { ExternalLink, ChevronDown, ChevronUp, ArrowUpRight } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { Button } from '@/components/ui/button';
+import { getProjectSlug } from '@/lib/projects/slugs';
 import type { Project } from '@/lib/api';
 
 export interface SelectedWorkSectionProps {
@@ -19,35 +21,45 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
   const getProjectCategory = (title: string): string => {
     const t = title.toLowerCase();
     if (t.includes('agro')) return 'Full-Stack & Mobile Ecosystem';
-    if (t.includes('vault')) return 'Mobile Security & Encryption';
     if (t.includes('cv')) return 'Full-Stack AI Platform';
-    if (t.includes('course') || t.includes('rep')) return 'Web Application & Campus Infrastructure';
+    if (t.includes('zee')) return 'Commercial E-Commerce Client Prototype';
+    if (t.includes('adepa')) return 'Commercial Retail Storefront Prototype';
+    if (t.includes('vault')) return 'Mobile Security & Encryption';
+    if (t.includes('course') || t.includes('rep')) return 'Campus Web Infrastructure';
     if (t.includes('ci/cd') || t.includes('infra')) return 'DevOps & Cloud Systems';
     if (t.includes('ticket')) return 'Event Platform & Payments';
     if (t.includes('shop')) return 'E-Commerce Frontend';
-    return 'Web & Mobile Application';
+    return 'Software Engineering Project';
   };
 
-  // Find primary flagship AgroMarket
+  // 1. Exact Approved Featured Order
   const agroProject = projects.find((p) => p.title.toLowerCase().includes('agro'));
-  const agroImage = agroProject?.image_url || '/assets/projects/agromarket.png';
-  const agroDescription =
-    agroProject?.description ||
-    'A three-sided agricultural and logistics marketplace connecting rural Ghanaian farmers directly with institutional commodity buyers and haulers. Engineered with real-time price discovery, automated Paystack escrow settlement, and SMS dispatch.';
-  const agroTags = agroProject?.tags
-    ? agroProject.tags.split(',').map((t) => t.trim())
-    : ['Flutter', 'NestJS', 'Redis', 'PostgreSQL', 'Paystack', 'OneSignal'];
-
-  // Other featured projects
-  const vaultProject = projects.find((p) => p.title.toLowerCase().includes('vault'));
   const cvProject = projects.find((p) => p.title.toLowerCase().includes('cv'));
-  const repProject = projects.find((p) => p.title.toLowerCase().includes('representative'));
+  const zeeProject = projects.find((p) => p.title.toLowerCase().includes('zee'));
+  const adepaProject = projects.find((p) => p.title.toLowerCase().includes('adepa'));
 
-  // Remaining projects for the archive
+  // 2. Identify remaining projects for the archive
   const featuredIds = new Set(
-    [agroProject?.id, vaultProject?.id, cvProject?.id, repProject?.id].filter(Boolean)
+    [agroProject?.id, cvProject?.id, zeeProject?.id, adepaProject?.id].filter(Boolean)
   );
   const remainingProjects = projects.filter((p) => !featuredIds.has(p.id));
+
+  // Enriched tags & fallbacks from verified data
+  const agroTags = agroProject?.tags
+    ? agroProject.tags.split(',').map((t) => t.trim())
+    : ['Flutter', 'NestJS', 'Redis', 'PostgreSQL', 'Paystack', 'One Signal'];
+
+  const cvTags = cvProject?.tags
+    ? cvProject.tags.split(',').map((t) => t.trim())
+    : ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Gemini AI', 'Puppeteer', 'Zod'];
+
+  const zeeTags = zeeProject?.tags
+    ? zeeProject.tags.split(',').map((t) => t.trim())
+    : ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Motion'];
+
+  const adepaTags = adepaProject?.tags
+    ? adepaProject.tags.split(',').map((t) => t.trim())
+    : ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Motion'];
 
   return (
     <section id="projects" className="py-24 sm:py-32 scroll-mt-20 sm:scroll-mt-24 border-t border-surface-border/60 relative">
@@ -57,12 +69,12 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
           <SectionHeading
             eyebrow="SELECTED WORK"
             title="Featured Engineering Projects"
-            description="Some ideas deserve more than a prototype. They deserve to become real products built for scale, performance, and user trust."
+            description="Four selected digital products spanning full-stack marketplace architecture, production generative AI, and commercial client storefronts."
             align="left"
             className="mb-0"
           />
           <div className="text-xs font-mono text-content-muted shrink-0">
-            <span>01 / 04 SELECTED</span>
+            <span>01 / 04 APPROVED SHOWCASE</span>
           </div>
         </div>
 
@@ -70,7 +82,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs text-lime uppercase tracking-widest">
-              Flagship Case Study
+              01 — Flagship Architecture
             </span>
             <div className="h-px bg-surface-border flex-1" />
           </div>
@@ -79,8 +91,11 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
             title={agroProject?.title || 'AgroMarket'}
             category="Full-Stack & Mobile Ecosystem"
             year="2025 – Present"
-            description={agroDescription}
-            imageUrl={agroImage}
+            description={
+              agroProject?.description ||
+              'A three-sided agricultural and logistics marketplace connecting rural Ghanaian farmers directly with institutional commodity buyers and haulers. Engineered with real-time price discovery, automated Paystack escrow settlement, and SMS dispatch.'
+            }
+            imageUrl={agroProject?.image_url || '/assets/projects/agromarket.png'}
             tags={agroTags}
             slug="agromarket"
             liveUrl={agroProject?.link || undefined}
@@ -89,37 +104,17 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
           />
         </div>
 
-        {/* 2. Secondary Grid: The Vault, CV Builder, Course Rep */}
+        {/* 2. Secondary Showcase Grid: CV Builder, Zee Essentials, Adepa */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="font-mono text-xs text-content-muted uppercase tracking-widest">
-              Selected Deployments
+              02 – 04 Selected Products &amp; Prototypes
             </span>
             <div className="h-px bg-surface-border flex-1" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* The Vault */}
-            <ProjectCard
-              title={vaultProject?.title || 'The Vault'}
-              category="Mobile Security & Encryption"
-              year="2024"
-              description={
-                vaultProject?.description ||
-                'A privacy-first mobile messaging and credential management application built with zero-knowledge local encryption using SQLCipher, biometric key derivation, and ephemeral sync queues.'
-              }
-              imageUrl={vaultProject?.image_url || '/assets/projects/the-vault.png'}
-              tags={
-                vaultProject?.tags
-                  ? vaultProject.tags.split(',').map((t) => t.trim())
-                  : ['Flutter', 'Node.js', 'SQLCipher', 'SQLite']
-              }
-              slug="the-vault"
-              liveUrl={vaultProject?.link || undefined}
-              githubUrl={vaultProject?.github_link || undefined}
-            />
-
-            {/* AI-Powered CV Builder */}
+            {/* 02: AI-Powered CV Builder */}
             <ProjectCard
               title={cvProject?.title || 'AI-Powered CV Builder'}
               category="Full-Stack AI Platform"
@@ -129,34 +124,42 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                 'An intelligent resume creation platform transforming raw work history into ATS-optimized, high-conversion developer resumes using Gemini AI inference, schema validation, and headless Puppeteer PDF rendering.'
               }
               imageUrl={cvProject?.image_url || '/assets/projects/cv-builder.png'}
-              tags={
-                cvProject?.tags
-                  ? cvProject.tags.split(',').map((t) => t.trim())
-                  : ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Gemini AI']
-              }
+              tags={cvTags}
               slug="cv-builder"
               liveUrl={cvProject?.link || 'https://cv-builder.dev-joseph.me'}
               githubUrl={cvProject?.github_link || undefined}
             />
 
-            {/* Course Representative Management System */}
+            {/* 03: Zee Essentials */}
             <ProjectCard
-              title={repProject?.title || 'Course Representative Management'}
-              category="Web Application & Campus Infrastructure"
+              title={zeeProject?.title || 'Zee Essentials'}
+              category="Commercial E-Commerce Client Prototype"
               year="2024"
               description={
-                repProject?.description ||
-                'A unified communication and academic resource platform for university course representatives, featuring bulk SMS notification dispatch, course material repository, and attendance logging.'
+                zeeProject?.description ||
+                'A premium e-commerce storefront prototype crafted for an Accra Lapaz creator gear retailer. Features responsive catalog discovery, interactive bag drawers, and admin demo controls.'
               }
-              imageUrl={repProject?.image_url || '/assets/projects/cv-builder.png'}
-              tags={
-                repProject?.tags
-                  ? repProject.tags.split(',').map((t) => t.trim())
-                  : ['React', 'Node.js', 'Tailwind', 'PostgreSQL', 'SMS Gateway']
+              imageUrl={zeeProject?.image_url || '/assets/projects/zee-essentials.png'}
+              tags={zeeTags}
+              slug="zee-essentials"
+              liveUrl={zeeProject?.link || 'https://zee-essentials-prototype.vercel.app/'}
+              githubUrl={zeeProject?.github_link || undefined}
+            />
+
+            {/* 04: Adepa Wc Mpaboa */}
+            <ProjectCard
+              title={adepaProject?.title || 'Adepa Wc Mpaboa'}
+              category="Commercial Retail Storefront Prototype"
+              year="2024"
+              description={
+                adepaProject?.description ||
+                'A modern digital storefront prototype built for a Kumasi Adum footwear brand, bringing streetwear sneaker discovery, category filtering, and shopping bag interactions into one polished interface.'
               }
-              slug="course-rep"
-              liveUrl={repProject?.link || 'https://rep.dev-joseph.me'}
-              githubUrl={repProject?.github_link || undefined}
+              imageUrl={adepaProject?.image_url || '/assets/projects/adepa.png'}
+              tags={adepaTags}
+              slug="adepa-wc-mpaboa"
+              liveUrl={adepaProject?.link || 'https://adepa-wc-mpaboa.vercel.app/'}
+              githubUrl={adepaProject?.github_link || undefined}
             />
           </div>
         </div>
@@ -167,10 +170,10 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h3 className="font-display font-bold text-xl text-content-primary">
-                  Additional Engineering Projects
+                  Engineering Project Archive
                 </h3>
                 <p className="text-sm text-content-secondary">
-                  Explore other applications, utilities, and infrastructure setups in Joseph&apos;s portfolio.
+                  Explore {remainingProjects.length} additional systems, utilities, and applications from Joseph&apos;s production portfolio.
                 </p>
               </div>
               <Button
@@ -185,62 +188,73 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
 
             {showAll && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8 animate-in fade-in duration-300">
-                {remainingProjects.map((p) => (
-                  <div
-                    key={p.id}
-                    className="p-6 rounded-2xl bg-surface border border-surface-border hover:border-lime/40 transition-all flex flex-col justify-between space-y-4 group"
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <Eyebrow variant="pill">{getProjectCategory(p.title)}</Eyebrow>
+                {remainingProjects.map((p) => {
+                  const pSlug = getProjectSlug(p);
+                  return (
+                    <div
+                      key={p.id}
+                      className="p-6 rounded-2xl bg-surface border border-surface-border hover:border-lime/40 transition-all flex flex-col justify-between space-y-4 group"
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <Eyebrow variant="pill">{getProjectCategory(p.title)}</Eyebrow>
+                        </div>
+                        <h4 className="font-display font-bold text-lg text-content-primary group-hover:text-lime transition-colors">
+                          <Link href={`/projects/${pSlug}`} className="hover:underline">
+                            {p.title}
+                          </Link>
+                        </h4>
+                        <p className="text-xs text-content-secondary leading-relaxed line-clamp-3">
+                          {p.description}
+                        </p>
                       </div>
-                      <h4 className="font-display font-bold text-lg text-content-primary group-hover:text-lime transition-colors">
-                        {p.title}
-                      </h4>
-                      <p className="text-xs text-content-secondary leading-relaxed line-clamp-3">
-                        {p.description}
-                      </p>
-                    </div>
 
-                    {p.tags && (
-                      <div className="flex flex-wrap gap-1.5 pt-2">
-                        {p.tags.split(',').map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2 py-0.5 rounded text-[10px] font-mono bg-surface-elevated text-content-muted"
-                          >
-                            {tag.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                      {p.tags && (
+                        <div className="flex flex-wrap gap-1.5 pt-2">
+                          {p.tags.split(',').map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-0.5 rounded text-[10px] font-mono bg-surface-elevated text-content-muted"
+                            >
+                              {tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      )}
 
-                    <div className="flex items-center justify-between pt-3 border-t border-surface-border/60 text-xs font-mono">
-                      {p.link ? (
-                        <a
-                          href={p.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      <div className="flex items-center justify-between pt-3 border-t border-surface-border/60 text-xs font-mono">
+                        <Link
+                          href={`/projects/${pSlug}`}
                           className="text-lime hover:underline inline-flex items-center gap-1 font-semibold"
                         >
-                          Live App <ExternalLink className="w-3 h-3" />
-                        </a>
-                      ) : (
-                        <span className="text-content-muted">Production Build</span>
-                      )}
-                      {p.github_link && (
-                        <a
-                          href={p.github_link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-content-secondary hover:text-content-primary inline-flex items-center gap-1"
-                        >
-                          <FaGithub className="w-3 h-3" /> Source
-                        </a>
-                      )}
+                          Case Study <ArrowUpRight className="w-3 h-3" />
+                        </Link>
+                        <div className="flex items-center gap-3">
+                          {p.link && (
+                            <a
+                              href={p.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-content-secondary hover:text-content-primary inline-flex items-center gap-1"
+                            >
+                              Live <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                          {p.github_link && (
+                            <a
+                              href={p.github_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-content-secondary hover:text-content-primary inline-flex items-center gap-1"
+                            >
+                              <FaGithub className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

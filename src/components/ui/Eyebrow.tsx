@@ -5,7 +5,7 @@ export interface EyebrowProps {
   children: React.ReactNode;
   dot?: boolean;
   className?: string;
-  variant?: 'subtle' | 'pill' | 'bordered';
+  variant?: 'subtle' | 'pill' | 'bordered' | 'dot';
 }
 
 export function Eyebrow({
@@ -14,11 +14,14 @@ export function Eyebrow({
   className = '',
   variant = 'subtle',
 }: EyebrowProps) {
+  const isDot = dot || variant === 'dot';
+  const effectiveVariant = variant === 'dot' ? 'subtle' : variant;
+
   const variantClasses = {
     subtle: 'text-lime',
     pill: 'px-3 py-1 rounded-full bg-surface-elevated border border-surface-border text-content-primary',
     bordered: 'pl-3 border-l border-lime text-content-secondary',
-  }[variant];
+  }[effectiveVariant];
 
   return (
     <div
@@ -28,7 +31,7 @@ export function Eyebrow({
         className
       )}
     >
-      {dot && (
+      {isDot && (
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-lime" />
