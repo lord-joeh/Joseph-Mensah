@@ -89,7 +89,7 @@ export function ContactSection() {
                   </div>
                   <div>
                     <span className="text-[10px] text-content-muted block uppercase">Location</span>
-                    <span className="text-content-primary">Accra, Ghana (GMT+0)</span>
+                    <span className="text-content-primary">Accra, Ghana</span>
                   </div>
                 </div>
 

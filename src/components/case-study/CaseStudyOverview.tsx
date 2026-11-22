@@ -11,7 +11,7 @@ export function CaseStudyOverview({ caseStudy }: CaseStudyOverviewProps) {
   return (
     <section className="space-y-12 pt-8 border-t border-surface-border/60">
       <div className="space-y-3">
-        <Eyebrow variant="dot">CONTEXT &amp; OBJECTIVES</Eyebrow>
+        <Eyebrow >CONTEXT &amp; OBJECTIVES</Eyebrow>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-content-primary">
           The Problem &amp; Engineering Purpose
         </h2>

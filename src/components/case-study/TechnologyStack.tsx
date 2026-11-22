@@ -9,7 +9,7 @@ export function TechnologyStack({ technologies }: TechnologyStackProps) {
   return (
     <section className="space-y-8 pt-8 border-t border-surface-border/60">
       <div className="space-y-2">
-        <Eyebrow variant="dot">TOOLS &amp; DEPENDENCIES</Eyebrow>
+        <Eyebrow >TOOLS &amp; DEPENDENCIES</Eyebrow>
         <h2 className="text-2xl sm:text-3xl font-display font-bold text-content-primary">
           Verified Technology Stack
         </h2>

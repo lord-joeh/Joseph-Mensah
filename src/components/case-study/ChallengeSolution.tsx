@@ -13,7 +13,7 @@ export function ChallengeSolution({ challenges }: ChallengeSolutionProps) {
   return (
     <section className="space-y-12 pt-8 border-t border-surface-border/60">
       <div className="space-y-3">
-        <Eyebrow variant="dot">TECHNICAL HURDLES</Eyebrow>
+        <Eyebrow >TECHNICAL HURDLES</Eyebrow>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-content-primary">
           Challenges &amp; Engineering Solutions
         </h2>

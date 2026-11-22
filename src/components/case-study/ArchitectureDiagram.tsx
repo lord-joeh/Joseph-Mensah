@@ -42,7 +42,7 @@ export function ArchitectureDiagram({
   return (
     <section id="architecture" className="space-y-12 pt-8 border-t border-surface-border/60 scroll-mt-24">
       <div className="space-y-3">
-        <Eyebrow variant="dot">SYSTEM ARCHITECTURE</Eyebrow>
+        <Eyebrow>SYSTEM ARCHITECTURE</Eyebrow>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-content-primary">
           How {projectTitle} is Engineered
         </h2>

@@ -56,17 +56,6 @@ export function ProjectStatusBadge({
         className
       )}
     >
-      <span className="relative flex h-2 w-2">
-        <span
-          className={cn(
-            'animate-ping absolute inline-flex h-full w-full rounded-full opacity-75',
-            config.dotColor
-          )}
-        />
-        <span
-          className={cn('relative inline-flex rounded-full h-2 w-2', config.dotColor)}
-        />
-      </span>
       <Icon className="w-3.5 h-3.5" />
       <span className="font-semibold uppercase tracking-wider text-[11px]">{label}</span>
     </div>

@@ -60,12 +60,12 @@ export function HeroSection({ about }: HeroSectionProps) {
           <div className="lg:col-span-8 space-y-6 sm:space-y-8">
             {/* Status & Location Pill */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
-              <Eyebrow variant="pill" dot>
+              <Eyebrow variant="pill">
                 Software Engineer · Full-Stack &amp; Mobile
               </Eyebrow>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-elevated border border-surface-border text-xs font-mono text-content-secondary">
                 <MapPin className="w-3.5 h-3.5 text-lime" />
-                <span>Accra, Ghana · GMT+0</span>
+                <span>Accra, Ghana</span>
               </div>
             </motion.div>
 
@@ -135,10 +135,6 @@ export function HeroSection({ about }: HeroSectionProps) {
               variants={itemVariants}
               className="flex items-center gap-3 pt-2 text-xs font-mono text-content-muted"
             >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime" />
-              </span>
               <span>Available for select engineering opportunities &amp; product builds</span>
             </motion.div>
           </div>

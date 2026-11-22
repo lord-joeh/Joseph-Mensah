@@ -39,11 +39,11 @@ const CAPABILITIES: CapabilityItem[] = [
       'Building production-grade mobile applications for iOS and Android with Flutter and React Native. Focusing on native device integration, robust offline-first synchronization, local database encryption with SQLCipher, and fluid 60/120fps UI experiences.',
     deliverables: [
       'Cross-Platform iOS & Android Deployments',
-      'Encrypted Local Storage (SQLCipher / SQLite)',
+      'Encrypted Local Storage',
       'Background Synchronization & Push Messaging',
-      'Mobile Payment Gateways (Paystack)',
+      'Mobile Payment Gateways',
     ],
-    techStack: ['Flutter', 'Dart', 'React Native', 'SQLCipher', 'OneSignal'],
+    techStack: ['Flutter', 'Dart', 'React Native', 'SQLCipher', 'Firebase cloud Messaging'],
   },
   {
     number: '03',
@@ -73,7 +73,7 @@ const CAPABILITIES: CapabilityItem[] = [
       'NGINX Reverse Proxies & SSL Certificates',
       'VPS Provisioning & Production Monitoring',
     ],
-    techStack: ['Docker', 'NGINX', 'GitHub Actions', 'DigitalOcean VPS', 'Git'],
+    techStack: ['Docker', 'NGINX', 'GitHub Actions', 'DigitalOcean VPS', 'Git', 'Linux', 'AWS EC2'],
   },
 ];
 

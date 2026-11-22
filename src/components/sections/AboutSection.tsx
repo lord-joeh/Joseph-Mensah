@@ -71,7 +71,7 @@ export function AboutSection({ about }: AboutSectionProps) {
           {/* Detailed Narrative & Resume */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
-              <Eyebrow variant="subtle" dot>Engineering Background &amp; Approach</Eyebrow>
+              <Eyebrow variant="subtle">Engineering Background &amp; Approach</Eyebrow>
 
               <div className="text-base sm:text-lg text-content-secondary leading-relaxed space-y-4">
                 <p>
