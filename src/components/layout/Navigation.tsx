@@ -128,7 +128,7 @@ export function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: DURATION.standard, ease: EASING.cinematic }}
-            className="fixed inset-0 z-mobileMenu bg-canvas/98 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-10 md:hidden"
+            className="fixed inset-0 z-modal bg-canvas flex flex-col justify-between p-6 sm:p-10 md:hidden overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation Menu"

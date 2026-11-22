@@ -126,6 +126,7 @@ export default {
         sticky: "50",
         overlay: "60",
         modal: "70",
+        mobileMenu: "80",
         toast: "100",
       },
       transitionTimingFunction: {
